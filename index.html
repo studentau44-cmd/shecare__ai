@@ -1,0 +1,4443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#C96F55">
+  <meta name="description" content="SheCare AI / SurvivorCare AI - Secure, offline-first care and support application for survivors of sexual violence.">
+  <title>SheCare AI - Secure Offline Support</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style id="shecare-core-styles">
+/* SheCare AI / SurvivorCare AI - Modern Healthcare Design System & Mobile Responsive Engine */
+:root {
+  /* Core Healthcare Accents */
+  --primary: #0d9488;
+  --primary-hover: #0f766e;
+  --primary-light: #ccfbf1;
+  --primary-subtle: #f0fdfa;
+  
+  --secondary: #6366f1;
+  --secondary-hover: #4f46e5;
+  --secondary-light: #e0e7ff;
+  
+  --accent: #f43f5e;
+  --accent-light: #ffe4e6;
+  
+  --warning: #d97706;
+  --warning-light: #fef3c7;
+  --danger: #e11d48;
+  --danger-light: #ffe4e6;
+  --success: #059669;
+  --success-light: #d1fae5;
+
+  /* Elegant Light-Peach to Dark-Peach Ombre Palette */
+  --peach-light: #FFF1E8;
+  --peach-soft: #F6C7AE;
+  --peach-medium: #E9A184;
+  --peach-dark: #C96F55;
+  --peach-border: #f1d2c2;
+  --bg-gradient: linear-gradient(145deg, #FFF1E8 0%, #FCF5F0 35%, #F7D2BF 75%, #EDB097 100%);
+  
+  --bg-main: #FFF1E8;
+  --bg-card: #ffffff;
+  --bg-subtle: #faf5f2;
+  --border: #ead7cc;
+  --border-focus: #0d9488;
+  
+  --text-main: #1e293b;
+  --text-muted: #576579;
+  --text-subtle: #8996a8;
+  --text-inverse: #ffffff;
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 1px 3px rgba(201, 111, 85, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(201, 111, 85, 0.1), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 24px rgba(201, 111, 85, 0.12), 0 4px 8px rgba(0, 0, 0, 0.04);
+  
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Discreet Theme Overrides (Neutral Office / Planner Camouflage Mode) */
+body.discreet-mode {
+  --primary: #475569;
+  --primary-hover: #334155;
+  --primary-light: #f1f5f9;
+  --primary-subtle: #f8fafc;
+  --secondary: #64748b;
+  --secondary-hover: #475569;
+  --accent: #64748b;
+  --accent-light: #f1f5f9;
+  --bg-gradient: none;
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --border: #e2e8f0;
+  background: #f8fafc !important;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Strict SVG constraints to prevent oversized icons */
+svg {
+  max-width: 100%;
+}
+.nav-item svg, .alert-box svg, .brand-icon svg, .card svg {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  flex-shrink: 0 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+/* Top Safety Bar with Quick Exit */
+.top-safety-bar {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 8px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  z-index: 9999;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.top-safety-bar .safety-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quick-exit-btn {
+  background: var(--danger);
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+  box-shadow: 0 2px 4px rgba(225, 29, 72, 0.4);
+}
+
+.quick-exit-btn:hover {
+  background: #be123c;
+  transform: translateY(-1px);
+}
+
+.app-container {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 45px);
+}
+
+/* Sidebar Navigation */
+.app-sidebar {
+  width: 270px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 16px;
+  transition: var(--transition);
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+
+.app-brand .brand-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--peach-medium), var(--peach-dark));
+  color: white;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+  box-shadow: 0 2px 6px rgba(201, 111, 85, 0.3);
+}
+
+.app-brand .brand-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.app-brand .brand-badge {
+  display: inline-block;
+  background: var(--peach-light);
+  color: var(--peach-dark);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--peach-soft);
+  margin-top: 2px;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background: var(--bg-subtle);
+  color: var(--text-main);
+  transform: translateX(2px);
+}
+
+.nav-item.active {
+  background: #ffffff;
+  color: var(--primary);
+  font-weight: 700;
+  border-color: var(--peach-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-item.danger-link {
+  color: var(--danger);
+  margin-top: 8px;
+  background: #fff1f2;
+  border-color: #fecdd3;
+}
+.nav-item.danger-link:hover {
+  background: #ffe4e6;
+}
+
+.sidebar-footer {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-subtle);
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+/* Main Content Area */
+.app-main {
+  flex: 1;
+  padding: 30px 40px;
+  overflow-y: auto;
+  max-width: 1240px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.view-section {
+  display: none;
+  animation: fadeIn 0.22s ease-in-out;
+}
+
+.view-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Section Header */
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-header h1 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+/* Alert Boxes & Disclaimers */
+.alert-box {
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  line-height: 1.55;
+  box-shadow: var(--shadow-sm);
+}
+
+.alert-warning {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+
+.alert-danger {
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+}
+
+.alert-info {
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  color: #0f766e;
+}
+
+.alert-neutral {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.alert-calm {
+  background: #fff8f5;
+  border: 1px solid var(--peach-soft);
+  color: #8c432d;
+}
+
+/* Cards & Grids */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-main);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn:disabled, .btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(13, 148, 136, 0.25);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--text-main);
+  border-color: var(--border);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bg-subtle);
+  border-color: var(--peach-border);
+}
+
+.btn-peach {
+  background: var(--peach-dark);
+  color: white;
+}
+.btn-peach:hover:not(:disabled) {
+  background: #b55e45;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+  box-shadow: 0 2px 4px rgba(225, 29, 72, 0.3);
+}
+.btn-danger:hover:not(:disabled) {
+  background: #be123c;
+  transform: translateY(-1px);
+}
+
+.btn-outline-danger {
+  background: #ffffff;
+  color: var(--danger);
+  border-color: #fecdd3;
+}
+.btn-outline-danger:hover:not(:disabled) {
+  background: #fff1f2;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.82rem;
+}
+
+.btn-lg {
+  padding: 14px 24px;
+  font-size: 1.05rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Forms & Inputs */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.92rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+.form-help {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Password Strength Bar */
+.password-strength-container {
+  margin-top: 8px;
+}
+
+.password-strength-bar {
+  height: 6px;
+  width: 100%;
+  background: #e2e8f0;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.password-strength-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.password-strength-fill.weak { width: 25%; background: var(--danger); }
+.password-strength-fill.fair { width: 50%; background: var(--warning); }
+.password-strength-fill.good { width: 75%; background: #3b82f6; }
+.password-strength-fill.strong { width: 100%; background: var(--success); }
+
+.password-strength-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Breathing Tool Component */
+.breathing-box-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: linear-gradient(135deg, #fff8f5 0%, #f0fdfa 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--peach-border);
+  margin: 20px 0;
+  text-align: center;
+}
+
+.breathing-circle-outer {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(13, 148, 136, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 20px 0;
+}
+
+.breathing-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(13, 148, 136, 0.25);
+  transition: transform 4s ease-in-out, background-color 4s ease-in-out;
+}
+
+.breathing-circle.inhale {
+  transform: scale(1.35);
+  background: #0d9488;
+}
+
+.breathing-circle.hold {
+  transform: scale(1.35);
+  background: #6366f1;
+}
+
+.breathing-circle.exhale {
+  transform: scale(0.9);
+  background: #0f766e;
+}
+
+.breathing-phase-text {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.breathing-timer-text {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+/* Chat Interface for Mental Health */
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.chat-header {
+  padding: 12px 18px;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-bubble {
+  max-width: 82%;
+  padding: 12px 16px;
+  border-radius: var(--radius-lg);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.chat-bubble.bot {
+  align-self: flex-start;
+  background: var(--bg-subtle);
+  color: var(--text-main);
+  border-bottom-left-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: var(--primary);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-quick-actions {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.chat-action-chip {
+  background: var(--primary-subtle);
+  border: 1px solid var(--primary-light);
+  color: var(--primary);
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.chat-action-chip:hover {
+  background: var(--primary-light);
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+}
+
+/* Modals */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 540px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: modalScale 0.2s ease-out;
+}
+
+@keyframes modalScale {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-body {
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background: var(--bg-subtle);
+}
+
+/* Camouflage Screen Overlay - Strictly Neutral Office/Notes (NOT Peach) */
+#camouflageScreen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f1f5f9;
+  z-index: 999999;
+  padding: 24px;
+  overflow-y: auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1e293b;
+}
+
+#camouflageScreen.active {
+  display: block;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-danger { background: var(--danger-light); color: var(--danger); }
+.badge-warning { background: var(--warning-light); color: #92400e; }
+.badge-success { background: var(--success-light); color: var(--success); }
+.badge-primary { background: var(--primary-light); color: var(--primary); }
+.badge-peach { background: var(--peach-light); color: var(--peach-dark); border: 1px solid var(--peach-soft); }
+
+/* Responsive Adjustments (Mobile-First Layout) */
+@media (max-width: 860px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .app-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 14px;
+  }
+  .app-brand {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+  .nav-menu {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    gap: 8px;
+  }
+  .nav-item {
+    white-space: nowrap;
+    padding: 8px 14px;
+    font-size: 0.88rem;
+  }
+  .app-main {
+    padding: 20px 14px;
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .card {
+    padding: 18px 14px;
+  }
+  .section-header h1 {
+    font-size: 1.45rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-safety-bar {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+  .top-safety-bar .safety-info {
+    gap: 4px;
+  }
+  .quick-exit-btn {
+    padding: 5px 12px;
+    font-size: 0.78rem;
+  }
+  .app-brand .brand-title {
+    font-size: 1.05rem;
+  }
+  .btn {
+    padding: 10px 14px;
+    font-size: 0.88rem;
+  }
+  .btn-lg {
+    padding: 12px 18px;
+    font-size: 0.95rem;
+  }
+  .breathing-circle-outer {
+    width: 180px;
+    height: 180px;
+  }
+  .breathing-circle {
+    width: 125px;
+    height: 125px;
+  }
+  .breathing-phase-text {
+    font-size: 1.05rem;
+  }
+  .breathing-timer-text {
+    font-size: 1.5rem;
+  }
+}
+
+</style>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <!-- Top Safety Bar with Quick Exit -->
+  <header class="top-safety-bar">
+    <div class="safety-info">
+      <span>🛡️ <strong>SheCare AI</strong> <span style="opacity:0.8;">| Private & Offline</span></span>
+      <span style="opacity: 0.75;">• Press <strong>ESC</strong> for Quick Exit</span>
+      <button id="btnPrivacyNotice" class="btn btn-sm" style="background:transparent;color:#f8fafc;border:none;text-decoration:underline;cursor:pointer;padding:0 6px;">Limitations & Privacy</button>
+    </div>
+    <button class="quick-exit-btn" id="btnTopQuickExit" title="Instantly hide this page and open neutral notes planner">
+      <span>⚡ Quick Exit (ESC)</span>
+    </button>
+  </header>
+
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar">
+      <div class="app-brand">
+        <div class="brand-icon">S</div>
+        <div>
+          <div class="brand-title" id="brandName">SheCare AI</div>
+          <span class="brand-badge" id="brandBadge">SurvivorCare • Offline First</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a class="nav-item active" data-view="view-mental-health">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <span id="navLabelMental">Mental Health Support</span>
+        </a>
+        <a class="nav-item" data-view="view-physical-health">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span id="navLabelPhysical">Physical Health & Sustenance</span>
+        </a>
+        <a class="nav-item" data-view="view-period-tracker">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span id="navLabelCycle">Cycle & Period Tracker</span>
+        </a>
+        <a class="nav-item" data-view="view-pregnancy-sti">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span id="navLabelPregnancy">Pregnancy & HIV/STI</span>
+        </a>
+        <a class="nav-item danger-link" data-view="view-sos">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <span id="navLabelSos">SOS Emergency Alert</span>
+        </a>
+        <a class="nav-item" data-view="view-safety-plan">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <span id="navLabelSafety">Safety Plan & Directory</span>
+        </a>
+        <a class="nav-item" data-view="view-privacy-security">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <span>Privacy & Active Sessions</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <label style="display:flex;align-items:center;justify-content:space-between;font-size:0.85rem;cursor:pointer;padding:4px 0;">
+          <span>🕶️ Camouflage Mode</span>
+          <input type="checkbox" id="discreetModeToggle" style="width:16px;height:16px;">
+        </label>
+        
+        <div class="user-status-card">
+          <div>
+            <div style="font-weight:700;" id="currentUsernameDisplay">Anonymous Guest</div>
+            <div id="authStatusBadge" class="badge badge-warning">Guest / Offline</div>
+          </div>
+          <button class="btn btn-sm btn-secondary" onclick="App.switchView('view-privacy-security')">Manage</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+
+      <!-- ========================================================== -->
+      <!-- VIEW 1: MENTAL HEALTH SUPPORT -->
+      <!-- ========================================================== -->
+      <section class="view-section active" id="view-mental-health">
+        <div class="section-header">
+          <h1>🌱 Mental Health & Crisis Grounding</h1>
+          <p>Trauma-informed, non-judgmental wellness tools and offline support protocols.</p>
+        </div>
+
+        <div class="alert-box alert-info">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div>
+            <strong>Trauma-Informed Care Notice:</strong> SheCare AI / SurvivorCare AI is an emergency offline companion, not a licensed therapist or physician. If you are experiencing an acute mental health crisis, free confidential advocates are available 24/7 at <strong>988</strong> (US/CA), <strong>1099 / 1043</strong> (Pakistan), <strong>112 / 181</strong> (India), or via our <strong>Safety Directory</strong>.
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <!-- Box Breathing Card -->
+          <div class="card">
+            <h3 class="card-title">🫁 Box Breathing (4-4-4-4 Pacing)</h3>
+            <p style="font-size:0.9rem;color:var(--text-muted);">Calms the vagus nerve and interrupts panic, hyperventilation, or sensory overload.</p>
+            
+            <div class="breathing-box-container">
+              <div class="breathing-circle-outer">
+                <div class="breathing-circle" id="breathingCircle">
+                  <div class="breathing-phase-text" id="breathingPhaseLabel">Ready</div>
+                  <div class="breathing-timer-text" id="breathingTimerLabel">4</div>
+                </div>
+              </div>
+              <div id="breathingCyclesCount" style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Completed cycles: 0</div>
+              <div>
+                <button class="btn btn-primary" id="btnStartBreathing">Start Breathing</button>
+                <button class="btn btn-secondary" id="btnStopBreathing" style="display:none;">Pause</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trauma-Informed Affirmations Card -->
+          <div class="card" style="display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <h3 class="card-title">🕊️ Grounding Affirmation</h3>
+              <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">Gentle truths to counter self-blame, guilt, and emotional overload.</p>
+              
+              <div style="background:var(--bg-subtle);border-left:4px solid var(--peach-dark);padding:18px;border-radius:var(--radius-md);margin-bottom:16px;">
+                <p id="affirmationText" style="font-size:1.05rem;font-weight:500;font-style:italic;line-height:1.6;color:var(--text-main);">
+                  "What happened was not your fault. You are not to blame."
+                </p>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-block" id="btnNextAffirmation">Next Affirmation</button>
+          </div>
+        </div>
+
+        <!-- 5-4-3-2-1 Sensory Grounding Tool -->
+        <div class="card" style="margin-bottom:24px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:0;">⚓ 5-4-3-2-1 Sensory Grounding Tool</h3>
+            <span class="badge badge-primary" id="groundingProgress">0 of 15 senses anchored</span>
+          </div>
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px;">Anchor yourself back into the present moment when dealing with flashbacks or dissociation.</p>
+          
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:14px;">
+            <div>
+              <label class="form-label">👀 5 Things You See</label>
+              <input type="text" class="form-control grounding-input" placeholder="Object 1" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Object 2" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Object 3" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Object 4" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Object 5">
+            </div>
+            <div>
+              <label class="form-label">✋ 4 Things You Touch</label>
+              <input type="text" class="form-control grounding-input" placeholder="Texture 1 (e.g. blanket)" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Texture 2 (e.g. cool desk)" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Texture 3" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Texture 4">
+            </div>
+            <div>
+              <label class="form-label">👂 3 Things You Hear</label>
+              <input type="text" class="form-control grounding-input" placeholder="Sound 1 (e.g. clock)" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Sound 2 (e.g. wind)" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Sound 3">
+            </div>
+            <div>
+              <label class="form-label">👃 2 Things You Smell</label>
+              <input type="text" class="form-control grounding-input" placeholder="Scent 1 (e.g. soap)" style="margin-bottom:6px;">
+              <input type="text" class="form-control grounding-input" placeholder="Scent 2">
+            </div>
+            <div>
+              <label class="form-label">👅 1 Thing You Taste</label>
+              <input type="text" class="form-control grounding-input" placeholder="Taste (e.g. water, mint)">
+            </div>
+          </div>
+
+          <div id="groundingCompletionCard" class="alert-box alert-info" style="display:none;margin-top:16px;">
+            <div>
+              <strong>🌟 Excellent work:</strong> You have brought all 5 senses into the current safe space. Notice the solid floor beneath you. You are in the present moment.
+            </div>
+          </div>
+
+          <div style="margin-top:16px;display:flex;justify-content:flex-end;">
+            <button class="btn btn-sm btn-secondary" id="btnResetGrounding">Reset Grounding Form</button>
+          </div>
+        </div>
+
+        <!-- Supportive Offline Chat Assistant -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div>
+              <h3 class="card-title" style="margin-bottom:2px;">💬 Supportive Offline Crisis Companion</h3>
+              <p style="font-size:0.82rem;color:var(--text-muted);">
+                🔒 <strong>100% Offline Rule-Based Companion:</strong> Operates entirely on this device using reviewed, deterministic trauma-informed response protocols. Not a cloud generative AI and not a human therapist.
+              </p>
+            </div>
+            <span class="badge badge-success">Offline Knowledge Active</span>
+          </div>
+
+          <div class="chat-wrapper">
+            <div class="chat-header">
+              <span style="font-weight:600;font-size:0.88rem;">Trauma-Informed Offline Protocol</span>
+              <span style="font-size:0.75rem;color:var(--text-muted);">Deterministic • Psychological First-Aid</span>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+              <div class="chat-bubble bot">
+                Hello. I am your private, offline crisis companion. You are safe here. What is on your mind right now?
+              </div>
+            </div>
+
+            <div class="chat-quick-actions">
+              <span class="chat-action-chip">I'm having a panic attack</span>
+              <span class="chat-action-chip">I feel like it's my fault</span>
+              <span class="chat-action-chip">I'm experiencing flashbacks</span>
+              <span class="chat-action-chip">I am being denied food or water</span>
+              <span class="chat-action-chip">I need urgent HIV PEP guidance</span>
+            </div>
+
+            <div class="chat-input-row">
+              <input type="text" class="form-control" id="chatInput" placeholder="Type what you are feeling... (private, stays on device)">
+              <button class="btn btn-primary" id="btnSendChat">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================== -->
+      <!-- VIEW 2: PHYSICAL HEALTH & SUSTENANCE -->
+      <!-- ========================================================== -->
+      <section class="view-section" id="view-physical-health">
+        <div class="section-header">
+          <h1>🩹 Physical Health & Sustenance Log</h1>
+          <p>Track bodily symptoms, injuries, pain, and access to basic human necessities (food and water).</p>
+        </div>
+
+        <div id="activeRedFlagsBox" style="display:none;"></div>
+
+        <div class="card-grid">
+          <!-- Sustenance & Basic Needs Check-In -->
+          <div class="card">
+            <h3 class="card-title">💧 Sustenance & Hydration Tracker</h3>
+            <p style="font-size:0.86rem;color:var(--text-muted);margin-bottom:12px;">
+              Designed for survivors facing confinement or denial of basic care. <em>Tracking limit: maximum 12 glasses per day. Personal hydration needs vary.</em>
+            </p>
+            
+            <div style="background:var(--bg-subtle);padding:16px;border-radius:var(--radius-md);margin-bottom:14px;text-align:center;border:1px solid var(--border);">
+              <div style="font-size:0.85rem;color:var(--text-muted);">Today's Hydration Log</div>
+              <div style="font-size:2.4rem;font-weight:800;color:var(--primary);" id="waterGlassCount">0</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Glasses of water logged (Max 12)</div>
+              <div style="display:flex;justify-content:center;gap:12px;">
+                <button class="btn btn-secondary btn-sm" id="btnSubWater">- Remove Glass</button>
+                <button class="btn btn-primary btn-sm" id="btnAddWater">+ Add Water Glass</button>
+              </div>
+            </div>
+
+            <!-- Calm, Non-shaming Water Limit Alert -->
+            <div id="waterLimitAlert" class="alert-box alert-calm" style="display:none;margin-bottom:14px;">
+              <div>
+                <strong>Notice:</strong> You have reached the daily tracking limit of 12 glasses.
+              </div>
+            </div>
+
+            <div id="waterGuidanceTip" style="font-size:0.85rem;margin-bottom:14px;"></div>
+
+            <label style="display:flex;align-items:flex-start;gap:8px;padding:10px;background:#fff1f2;border:1px solid #fecdd3;border-radius:var(--radius-md);cursor:pointer;">
+              <input type="checkbox" id="checkboxDeniedSustenance" style="margin-top:3px;width:16px;height:16px;">
+              <span style="font-size:0.85rem;color:#9f1239;">
+                <strong>I am currently being denied food, water, or medication by someone in my home.</strong> (Click for immediate safe survival advice)
+              </span>
+            </label>
+          </div>
+
+          <!-- Symptom Logger Form -->
+          <div class="card">
+            <h3 class="card-title">📝 Record Physical Symptoms & Injuries</h3>
+            <form id="formLogSymptom">
+              <div class="form-group">
+                <div style="display:flex;justify-content:space-between;">
+                  <label class="form-label">Pain Level (0 = None, 10 = Severe)</label>
+                  <span id="painLevelDisplay" style="font-weight:700;color:var(--primary);">0 / 10</span>
+                </div>
+                <input type="range" min="0" max="10" value="0" class="form-control" id="inputPainLevel" style="cursor:pointer;">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Primary Pain / Injury Area</label>
+                <select class="form-control" id="inputPainArea">
+                  <option value="General Body">General Body</option>
+                  <option value="Pelvic / Genital">Pelvic / Genital</option>
+                  <option value="Abdominal / Stomach">Abdominal / Stomach</option>
+                  <option value="Head / Facial">Head / Facial</option>
+                  <option value="Neck / Throat">Neck / Throat (Strangulation / Choking)</option>
+                  <option value="Arms / Wrists / Bruising">Arms / Wrists / Bruising</option>
+                  <option value="Back / Chest">Back / Chest</option>
+                </select>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div class="form-group">
+                  <label class="form-label">Bleeding</label>
+                  <select class="form-control" id="inputBleeding">
+                    <option value="None">None</option>
+                    <option value="Spotting / Mild">Spotting / Mild</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Heavy">Heavy (Soaking pads quickly)</option>
+                    <option value="Abnormal Continuous">Abnormal Continuous</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Fever / Temperature</label>
+                  <select class="form-control" id="inputFever">
+                    <option value="None">Normal / None</option>
+                    <option value="Mild (<100.4°F / 38°C)">Mild (<100.4°F)</option>
+                    <option value="High (>=101°F / 38.3°C)">High (>=101°F / 38.3°C)</option>
+                    <option value="Severe with Chills">Severe with Chills</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                  <input type="checkbox" id="inputDizziness" style="width:16px;height:16px;">
+                  <span style="font-size:0.9rem;">Experiencing dizziness, lightheadedness, weakness, or nausea</span>
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Bruising, Cuts, or Marks (Optional details)</label>
+                <input type="text" class="form-control" id="inputBruising" placeholder="e.g. Bruising on inner arms, petechiae around eyes">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Confidential Notes (Stored locally on this device only)</label>
+                <textarea class="form-control" id="inputSymptomNotes" rows="2" placeholder="Private observations or dates for medical appointments"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">Save Health Record</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Recorded History -->
+        <div class="card">
+          <h3 class="card-title">📋 Confidential Local Symptom Logs</h3>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">These entries are kept strictly in local storage on this hardware. They do not diagnose conditions and never sync to cloud servers without your explicit export.</p>
+          <div id="symptomLogsList"></div>
+        </div>
+      </section>
+
+      <!-- ========================================================== -->
+      <!-- VIEW 3: MENSTRUAL & PERIOD TRACKER -->
+      <!-- ========================================================== -->
+      <section class="view-section" id="view-period-tracker">
+        <div class="section-header">
+          <h1>🌸 Menstrual & Cycle Tracker</h1>
+          <p>Record cycle dates and monitor symptoms. All estimates are clearly labelled.</p>
+        </div>
+
+        <div class="alert-box alert-warning">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div>
+            <strong>Important Statistical Estimation Disclaimer:</strong> Menstrual cycle predictions are statistical estimates only. Menstrual timing is frequently altered or delayed by severe acute stress, trauma, emergency contraception (Plan B / Ella), illness, or nutritional deprivation. These estimates are non-diagnostic and cannot be used for contraception or ruling out pregnancy.
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <!-- Cycle Estimation Card -->
+          <div class="card">
+            <h3 class="card-title">📅 Estimated Upcoming Window</h3>
+            <div style="background:var(--bg-subtle);padding:18px;border-radius:var(--radius-md);margin-bottom:16px;border:1px solid var(--border);">
+              <div style="font-size:0.85rem;color:var(--text-muted);">Estimated Next Period:</div>
+              <div style="font-size:1.3rem;font-weight:700;color:var(--peach-dark);margin:4px 0 12px 0;" id="estimatedNextPeriodText">Need at least 1 cycle log to calculate estimate.</div>
+              
+              <div style="font-size:0.85rem;color:var(--text-muted);">Approximate Ovulation Window (Estimate):</div>
+              <div style="font-size:1.05rem;font-weight:600;color:var(--text-main);" id="estimatedFertileWindowText">Pending cycle data</div>
+              
+              <div style="font-size:0.8rem;color:var(--text-subtle);margin-top:10px;">
+                Average cycle length: <span id="avgCycleDaysText">Baseline 28 days</span>
+              </div>
+            </div>
+            <p style="font-size:0.82rem;color:var(--text-muted);">
+              Note: If you have recently taken emergency contraception, your next period may arrive several days earlier or later than usual.
+            </p>
+          </div>
+
+          <!-- Log Cycle Form -->
+          <div class="card">
+            <h3 class="card-title">➕ Log Menstrual Period</h3>
+            <form id="formLogPeriod">
+              <div class="form-group">
+                <label class="form-label">Period Start Date</label>
+                <input type="date" class="form-control" id="inputCycleStartDate" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Flow Level</label>
+                <select class="form-control" id="inputCycleFlow">
+                  <option value="Light">Light</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="Heavy">Heavy</option>
+                  <option value="Spotting">Spotting</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Accompanying Symptoms / Notes</label>
+                <input type="text" class="form-control" id="inputCycleNotes" placeholder="e.g. Cramps, nausea, fatigue, delayed by stress">
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">Record Cycle Date</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">📜 Past Cycle History</h3>
+          <div id="cycleHistoryList"></div>
+        </div>
+      </section>
+
+      <!-- ========================================================== -->
+      <!-- VIEW 4: PREGNANCY & HIV/STI SUPPORT -->
+      <!-- ========================================================== -->
+      <section class="view-section" id="view-pregnancy-sti">
+        <div class="section-header">
+          <h1>🔬 Pregnancy & HIV/STI Support</h1>
+          <p>Time-critical HIV PEP guidelines, responsible pregnancy test timelines, and STI education.</p>
+        </div>
+
+        <!-- 72-Hour HIV PEP High Priority Protocol -->
+        <div class="card" style="border:2px solid var(--danger);margin-bottom:24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+            <div>
+              <span class="badge badge-danger" style="margin-bottom:6px;">Time Critical Medical Protocol</span>
+              <h3 style="font-size:1.35rem;font-weight:800;color:var(--danger);">🚨 HIV PEP (Post-Exposure Prophylaxis) 72-Hour Window</h3>
+            </div>
+          </div>
+
+          <p style="font-size:0.92rem;line-height:1.6;margin-bottom:16px;">
+            <strong>PEP is a 28-day emergency medication course that can prevent HIV from establishing in your body after potential exposure.</strong>
+            It MUST be assessed and initiated as soon as possible, and <strong>strictly within 72 hours (3 days)</strong> of exposure. Every hour counts.
+          </p>
+
+          <div style="background:var(--bg-subtle);padding:18px;border-radius:var(--radius-md);margin-bottom:16px;border:1px solid var(--border);">
+            <label class="form-label">When did the potential exposure / incident occur?</label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <input type="datetime-local" class="form-control" id="inputPepExposureDate" style="max-width:320px;">
+              <button class="btn btn-danger" id="btnCalculatePep">Calculate PEP Window</button>
+            </div>
+            <div id="pepCalculationResult" style="margin-top:14px;"></div>
+          </div>
+
+          <div class="alert-box alert-neutral" style="margin-bottom:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div style="font-size:0.86rem;">
+              <strong>Where to get PEP:</strong> Any Hospital Emergency Department (ER), Sexual Assault Referral Centre (SARC), or One Stop Crisis Centre can evaluate and dispense PEP. Clinical assessment must not be replaced by a calculator.
+            </div>
+          </div>
+        </div>
+
+        <!-- Responsible Pregnancy Testing Guidance -->
+        <div class="card" style="margin-bottom:24px;">
+          <h3 class="card-title">🤰 Responsible Pregnancy Guidance & Testing Window</h3>
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:14px;">
+            SheCare AI does not diagnose pregnancy from symptoms. Symptoms like nausea, tenderness, or fatigue can stem from shock, stress, or emergency contraception.
+          </p>
+
+          <div style="background:var(--bg-subtle);padding:18px;border-radius:var(--radius-md);border:1px solid var(--border);">
+            <label class="form-label">Date of Incident / Unprotected Intercourse:</label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <input type="date" class="form-control" id="inputPregIncidentDate" style="max-width:280px;">
+              <button class="btn btn-primary" id="btnCalculatePregTest">Check Testing Timelines</button>
+            </div>
+            <div id="pregnancyTestResult"></div>
+          </div>
+        </div>
+
+        <!-- STI Educational Library -->
+        <div class="card">
+          <div style="margin-bottom:14px;">
+            <h3 class="card-title" style="margin-bottom:4px;">📚 STI Information & Clinical Testing Timelines</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              Most sexually transmitted infections (STIs) are asymptomatic in the early stages. SheCare AI cannot rule out infections based on symptoms. Clinical laboratory testing is required.
+            </p>
+          </div>
+          <div class="card-grid" id="stiKnowledgeCards"></div>
+        </div>
+      </section>
+
+      <!-- ========================================================== -->
+      <!-- VIEW 5: SOS EMERGENCY ALERT -->
+      <!-- ========================================================== -->
+      <section class="view-section" id="view-sos">
+        <div class="section-header">
+          <h1 style="color:var(--danger);">🚨 SOS Emergency Alert System</h1>
+          <p>Configure trusted emergency contacts and prepare alerts. Realist, transparent delivery reporting.</p>
+        </div>
+
+        <div id="sirenBanner" class="alert-box alert-danger" style="display:none;">
+          <div>
+            <strong>🔊 LOUD ALARM ACTIVE:</strong> A distress siren is currently generating sound on your device.
+          </div>
+        </div>
+
+        <div class="alert-box alert-warning">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div>
+            <strong>Honest Delivery Notice:</strong> Remote SOS alerts require active cellular carrier coverage or internet connectivity. <strong>If your phone has no service or Wi-Fi, remote transmission cannot be delivered.</strong> Opening an SMS app or phone dialer prepares the action but does not confirm delivery or a completed call.
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <!-- Contact Config -->
+          <div class="card">
+            <h3 class="card-title">👤 Configure Trusted Contact</h3>
+            <form id="formSosContact">
+              <div class="form-group">
+                <label class="form-label">Contact Name / Advocate</label>
+                <input type="text" class="form-control" id="inputSosName" placeholder="e.g. Sister, Friend, Crisis Advocate" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Phone Number (with country code)</label>
+                <input type="tel" class="form-control" id="inputSosPhone" placeholder="+923001234567 or +919876543210" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email Address (Optional)</label>
+                <input type="email" class="form-control" id="inputSosEmail" placeholder="contact@example.com">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Custom Distress Note (Optional)</label>
+                <input type="text" class="form-control" id="inputSosCustomMsg" placeholder="e.g. Please check in with me right away.">
+              </div>
+
+              <div class="form-group">
+                <label style="display:flex;align-items:flex-start;gap:8px;font-size:0.85rem;cursor:pointer;">
+                  <input type="checkbox" id="checkboxConsentLocation" style="margin-top:2px;width:16px;height:16px;">
+                  <span>Include estimated GPS coordinates in SOS message (Requires your explicit consent. Never shared without permission).</span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-secondary btn-block">Save Contact to Device</button>
+            </form>
+          </div>
+
+          <!-- Trigger Dispatch -->
+          <div class="card" style="display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <h3 class="card-title">📡 Emergency Dispatch Actions</h3>
+              <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">
+                Choose an action to reach your trusted contact. Opening the app requires your manual tap to send:
+              </p>
+
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <button class="btn btn-danger btn-lg" id="btnDispatchSms">
+                  📱 Open Native Device SMS (Pre-filled Distress Message)
+                </button>
+
+                <button class="btn btn-primary" id="btnDispatchCall">
+                  📞 Open Device Phone Dialer
+                </button>
+
+                <button class="btn btn-secondary" id="btnDispatchServer">
+                  🌐 Send Alert via Server Gateway
+                </button>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px;">
+              <h4 style="font-size:0.95rem;margin-bottom:4px;">Offline Distress Siren Simulator</h4>
+              <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px;">
+                Generates a loud acoustic alarm to draw local attention. <strong>Warning:</strong> In domestic abuse situations, sound may escalate risk if the abuser is within hearing range.
+              </p>
+              <button class="btn btn-outline-danger btn-block" id="btnStartSiren">🔊 Start Loud Distress Siren</button>
+              <button class="btn btn-danger btn-block" id="btnStopSiren" style="display:none;">🔇 STOP ALARM SIREN</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">🛰️ Truthful Dispatch History & Transmission Logs</h3>
+          <div id="sosDispatchLogsList"></div>
+        </div>
+      </section>
+
+      <!-- ========================================================== -->
+      <!-- VIEW 6: SAFETY PLAN & VERIFIED DIRECTORY -->
+      <!-- ========================================================== -->
+      <section class="view-section" id="view-safety-plan">
+        <div class="section-header">
+          <h1>🛡️ Safety Plan & Verified Directory</h1>
+          <p>Personalized safety strategies, emergency go-bag preparation, and verified lifelines across Pakistan, India, US, UK, and Canada.</p>
+        </div>
+
+        <div class="card-grid">
+          <!-- Go-Bag Checklist -->
+          <div class="card">
+            <h3 class="card-title">🎒 Emergency Go-Bag Checklist</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Pack or stash these essential items in a hidden, accessible place if you need to leave quickly.</p>
+            <div id="goBagChecklistContainer"></div>
+          </div>
+
+          <!-- Secret Code Word & Isolation Defense -->
+          <div class="card">
+            <h3 class="card-title">🗝️ Safe Code Word & Isolation Plan</h3>
+            <div class="form-group">
+              <label class="form-label">Discreet Code Word / Secret Distress Phrase</label>
+              <input type="text" class="form-control" id="inputSafeCodeWord" placeholder="e.g. 'Can you send the blue recipe?'">
+              <div class="form-help">Agree on this phrase with a trusted friend. If texted, it signals you need police or shelter without alerting an abuser.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Isolation / Sustenance Denial Defense Plan</label>
+              <textarea class="form-control" id="inputIsolationSteps" rows="3"></textarea>
+              <div class="form-help">Steps to take if trapped, denied food/water, or restricted from leaving.</div>
+            </div>
+
+            <button class="btn btn-secondary btn-block" id="btnSaveSafetyDetails">Save Safety Plan</button>
+          </div>
+        </div>
+
+        <!-- Verified Support Directory -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+            <div>
+              <h3 class="card-title" style="margin-bottom:2px;">📞 Verified 24/7 Lifelines & Support Directory</h3>
+              <p style="font-size:0.85rem;color:var(--text-muted);">
+                All organizations listed are real, publicly verified resources in Pakistan, India, US, UK, Canada, and Global. No invented partnerships.
+              </p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <select class="form-control" id="selectCountryFilter" style="max-width:180px;">
+                <option value="All">All Countries</option>
+                <option value="Pakistan">🇵🇰 Pakistan</option>
+                <option value="India">🇮🇳 India</option>
+                <option value="United States">🇺🇸 United States</option>
+                <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                <option value="Canada">🇨🇦 Canada</option>
+                <option value="Global">🌐 Global / Int'l</option>
+              </select>
+              <select class="form-control" id="selectDirectoryFilter" style="max-width:180px;">
+                <option value="All">All Categories</option>
+                <option value="Immediate Crisis">Immediate Crisis</option>
+                <option value="Medical & Forensic">Medical & Forensic (SARC)</option>
+                <option value="Counseling">Counseling</option>
+                <option value="Shelter & Food Aid">Shelter & Food Aid</option>
+                <option value="Legal Advocacy">Legal Advocacy</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card-grid" id="verifiedDirectoryContainer"></div>
+        </div>
+      </section>
+
+      <!-- ========================================================== -->
+      <!-- VIEW 7: PRIVACY, SECURITY & ACTIVE SESSIONS -->
+      <!-- ========================================================== -->
+      <section class="view-section" id="view-privacy-security">
+        <div class="section-header">
+          <h1>🔐 Privacy, Security & Active Sessions</h1>
+          <p>Cryptographic protections, truthful device session tracking, and full data autonomy.</p>
+        </div>
+
+        <div class="card-grid">
+          <!-- Register / Create Safe Profile -->
+          <div class="card">
+            <h3 class="card-title">🛡️ Create Safe Offline Profile</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">
+              Uses client-side PBKDF2 (SHA-256, 100,000 iterations). Plaintext passwords are never saved.
+            </p>
+            <form id="formRegister">
+              <div class="form-group">
+                <label class="form-label">Pseudonym / Safe Username</label>
+                <input type="text" class="form-control" id="inputRegUsername" placeholder="e.g. Phoenix2026" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Master Password</label>
+                <input type="password" class="form-control" id="inputRegPassword" placeholder="••••••••••••" required>
+                <div class="password-strength-container">
+                  <div class="password-strength-bar">
+                    <div class="password-strength-fill" id="pwdStrengthFill"></div>
+                  </div>
+                  <div class="password-strength-text">
+                    <span id="pwdStrengthLabel">Strength: Empty</span>
+                  </div>
+                  <div id="pwdStrengthFeedback" style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;"></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Recovery Memory Hint (No secret answers)</label>
+                <input type="text" class="form-control" id="inputRegHint" placeholder="e.g. Grandma's favorite color">
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">Encrypt & Save Profile</button>
+            </form>
+          </div>
+
+          <!-- Login to Existing Profile -->
+          <div class="card">
+            <h3 class="card-title">🔑 Sign In to Existing Profile</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Unlock your stored logs on this device.</p>
+            <form id="formLogin">
+              <div class="form-group">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" id="inputLoginUsername" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputLoginPassword" required>
+              </div>
+              <button type="submit" class="btn btn-secondary btn-block">Unlock Profile</button>
+            </form>
+
+            <div style="margin-top:24px;border-top:1px solid var(--border);padding-top:16px;">
+              <h4 style="font-size:0.95rem;margin-bottom:8px;">Data Portability & Zero-Trace Purge</h4>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="btn btn-sm btn-secondary" id="btnExportData">💾 Export Encrypted Backup</button>
+                <button class="btn btn-sm btn-outline-danger" id="btnPurgeAllData">🗑️ Purge All Data (Wipe Everything)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Sessions & Device Recognition -->
+        <div class="card" style="margin-bottom:24px;">
+          <div style="margin-bottom:12px;">
+            <h3 class="card-title" style="margin-bottom:2px;">📱 Active Sessions & Recognized Devices</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);">
+              Truthful session tracking based on browser user-agent and local secure device identification. Browser user-agent is a helpful heuristic, not biometric certainty. Revoke unfamiliar sessions to protect your safety.
+            </p>
+          </div>
+          <div id="activeSessionsList"></div>
+        </div>
+
+        <!-- Privacy Transparency Disclosure -->
+        <div class="card">
+          <h3 class="card-title">🔍 Privacy Architecture Transparency</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;font-size:0.88rem;">
+            <div style="background:var(--bg-subtle);padding:14px;border-radius:var(--radius-md);border:1px solid var(--border);">
+              <strong style="color:var(--primary);display:block;margin-bottom:4px;">✅ What Stays on Your Device:</strong>
+              <p>All symptom logs, period dates, hydration stats, trusted contact names, and safety notes are stored strictly in local browser storage on this hardware. They are never sent to third-party ad networks or data brokers.</p>
+            </div>
+            <div style="background:var(--bg-subtle);padding:14px;border-radius:var(--radius-md);border:1px solid var(--border);">
+              <strong style="color:var(--secondary);display:block;margin-bottom:4px;">🌐 What is Transmitted:</strong>
+              <p>Nothing by default. When triggering the optional Server Gateway SOS, only the distress alert payload is sent to the configured backend. Zero analytics or location trackers are embedded.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- CAMOUFLAGE / DISGUISE SCREEN (NEUTRAL NOTES & PLANNER) -->
+  <!-- ========================================================== -->
+  <div id="camouflageScreen">
+    <div style="max-width:820px;margin:30px auto;background:#ffffff;border-radius:12px;padding:30px;box-shadow:0 4px 16px rgba(0,0,0,0.08);border:1px solid #cbd5e1;">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0;padding-bottom:16px;margin-bottom:20px;">
+        <div>
+          <h2 style="font-size:1.35rem;font-weight:700;color:#1e293b;margin-bottom:2px;">📝 Personal Daily Notes & Task Planner</h2>
+          <span style="font-size:0.82rem;color:#64748b;">Daily offline scratchpad & task checklist</span>
+        </div>
+        <span style="font-size:0.8rem;color:#64748b;background:#f1f5f9;padding:4px 10px;border-radius:6px;">Auto-saved locally</span>
+      </div>
+
+      <!-- Quick To-Do Checklist -->
+      <div style="margin-bottom:22px;">
+        <h3 style="font-size:0.95rem;font-weight:700;color:#334155;margin-bottom:10px;">📋 Action Checklist</h3>
+        <div id="camoTodoList" style="display:flex;flex-direction:column;gap:8px;background:#f8fafc;padding:14px;border-radius:8px;border:1px solid #e2e8f0;">
+          <label style="display:flex;align-items:center;gap:10px;font-size:0.9rem;cursor:pointer;">
+            <input type="checkbox" id="camoCheck1" style="width:16px;height:16px;">
+            <span>Buy groceries and basic household necessities</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;font-size:0.9rem;cursor:pointer;">
+            <input type="checkbox" id="camoCheck2" checked style="width:16px;height:16px;">
+            <span style="text-decoration:line-through;color:#94a3b8;">Review weekly course materials & study schedule</span>
+          </label>
+          <label style="display:flex;align-items:center;gap:10px;font-size:0.9rem;cursor:pointer;">
+            <input type="checkbox" id="camoCheck3" style="width:16px;height:16px;">
+            <span>Organize personal folders and clean desk space</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Daily Scratchpad -->
+      <div style="margin-bottom:24px;">
+        <h3 style="font-size:0.95rem;font-weight:700;color:#334155;margin-bottom:8px;">📌 Daily Scratchpad & Meeting Notes</h3>
+        <textarea id="camoScratchpad" style="width:100%;height:150px;padding:12px;border-radius:8px;border:1px solid #cbd5e1;font-family:inherit;font-size:0.92rem;line-height:1.5;resize:vertical;" placeholder="Write personal study notes, reminders, or general planning items here..."></textarea>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid #e2e8f0;padding-top:16px;">
+        <span style="font-size:0.8rem;color:#94a3b8;">Notes Planner v3.1 • Offline Mode</span>
+        <button id="btnPromptResume" class="btn btn-sm btn-secondary" style="font-size:0.8rem;padding:6px 14px;">Switch View</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- MODAL: INTENTIONAL RESUME CONFIRMATION (CAMOUFLAGE EXIT) -->
+  <!-- ========================================================== -->
+  <div class="modal-overlay" id="modalResumeConfirm">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-weight:700;">👁️ Return to SheCare AI?</h3>
+        <button class="btn btn-sm btn-secondary" onclick="App.closeModal('modalResumeConfirm')">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size:0.92rem;line-height:1.6;">
+        <p style="margin-bottom:12px;">
+          You are about to switch back to the sensitive healthcare and support interface.
+        </p>
+        <div class="alert-box alert-warning">
+          <strong>Privacy Safety Check:</strong> Please ensure nobody is looking over your shoulder or watching your screen before proceeding.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="App.closeModal('modalResumeConfirm')">Stay in Notes</button>
+        <button class="btn btn-primary" id="btnConfirmResumeSession">Yes, Return to Healthcare Portal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- MODAL: QUICK EXIT LIMITATIONS NOTICE -->
+  <!-- ========================================================== -->
+  <div class="modal-overlay" id="modalQuickExitNotice">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-weight:700;">🔒 Quick Exit Limitations & Safety Advice</h3>
+        <button class="btn btn-sm btn-secondary" onclick="App.closeModal('modalQuickExitNotice')">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size:0.9rem;line-height:1.6;">
+        <p style="margin-bottom:12px;">
+          <strong>What Quick Exit does:</strong>
+          It immediately switches your display to a benign notes/planner camouflage screen, alters the browser tab title, and clears sensitive active input forms.
+        </p>
+        <div class="alert-box alert-warning" style="margin-bottom:14px;">
+          <strong>Important Limitations:</strong>
+          <ul style="margin-left:18px;margin-top:4px;">
+            <li><strong>Browser History:</strong> Web browsers still store visited addresses in history unless you use Private/Incognito mode or manually clear history. Quick Exit cannot wipe browser cache.</li>
+            <li><strong>Shoulder Surfing & Spyware:</strong> If someone is physically watching your screen or has spyware/keyloggers installed on the device, Quick Exit cannot prevent them from having seen previous screens.</li>
+            <li><strong>Network & Router Logs:</strong> Wi-Fi routers log domain names visited when online.</li>
+          </ul>
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-muted);">
+          <strong>Best Practice:</strong> Use Private/Incognito browsing, and if you feel unsafe using this device, try to use a secure public library or trusted device.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="App.closeModal('modalQuickExitNotice')">Understood</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- MODAL: ISOLATION & SUSTENANCE HELP -->
+  <!-- ========================================================== -->
+  <div class="modal-overlay" id="modalIsolationHelp">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="color:#9f1239;font-weight:700;">🆘 Denial of Food & Water Emergency Guidance</h3>
+        <button class="btn btn-sm btn-secondary" onclick="App.closeModal('modalIsolationHelp')">&times;</button>
+      </div>
+      <div class="modal-body" style="font-size:0.9rem;line-height:1.6;">
+        <p style="margin-bottom:12px;">
+          <strong>Withholding food, water, or life-saving medication is an acute, unlawful form of abuse and physical endangerment.</strong>
+        </p>
+        <ul style="margin-left:18px;margin-bottom:14px;color:#9f1239;">
+          <li><strong>Discreet Hydration:</strong> Tap water from bathroom sinks can sustain you. Keep small clean bottles or cups hidden in your room or laundry basket.</li>
+          <li><strong>Signaling Neighbors:</strong> If you are physically confined, discreetly signal delivery drivers, postal workers, or neighbors via a window note or coded light flickers.</li>
+          <li><strong>Emergency Escalation:</strong> Denial of water causes rapid biological decline within 48–72 hours. If your health is deteriorating, contact emergency services (112 in India, 1099/1043 in Pakistan, 911 in US) or our 24/7 domestic violence helplines immediately.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" onclick="App.switchView('view-safety-plan');App.closeModal('modalIsolationHelp');">Open Safety Directory</button>
+        <button class="btn btn-secondary" onclick="App.closeModal('modalIsolationHelp')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- MODAL: AUTO-LOCK SCREEN -->
+  <!-- ========================================================== -->
+  <div class="modal-overlay" id="modalLockScreen">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-weight:700;">🔒 Session Auto-Locked for Safety</h3>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px;">
+          This session was locked due to inactivity to protect your private health data from unauthorized viewers.
+        </p>
+        <form id="formUnlockScreen">
+          <div class="form-group">
+            <label class="form-label">Enter Password to Unlock</label>
+            <input type="password" class="form-control" id="inputUnlockPassword" placeholder="••••••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Unlock Profile</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fallback External Scripts (for modular deployments) -->
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/mental_health.js"></script>
+  <script src="js/physical_health.js"></script>
+  <script src="js/period_tracker.js"></script>
+  <script src="js/pregnancy_sti.js"></script>
+  <script src="js/sos.js"></script>
+  <script src="js/safety_plan.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Embedded Resilient Engine for Static Hosting (Guarantees zero 404s on GitHub Pages) -->
+  <script id="shecare-bundled-engine">
+  if (typeof App === 'undefined' || !window.App) {
+/* === db.js === */
+/**
+ * SurvivorCare AI / SheCare AI - Offline-First Database & Storage Engine
+ * Manages local persistent data with strict zero-third-party-sharing privacy.
+ */
+const DB = {
+  KEYS: {
+    USER: 'survivorcare_user',
+    SESSIONS: 'survivorcare_sessions',
+    SYMPTOMS: 'survivorcare_symptom_logs',
+    CYCLE: 'survivorcare_cycle_logs',
+    SUSTENANCE: 'survivorcare_sustenance_logs',
+    SAFETY_PLAN: 'survivorcare_safety_plan',
+    SOS_CONTACTS: 'survivorcare_sos_contacts',
+    SOS_LOGS: 'survivorcare_sos_logs',
+    SETTINGS: 'survivorcare_settings',
+    CHAT_HISTORY: 'survivorcare_chat_history',
+    CAMOUFLAGE_NOTES: 'survivorcare_camouflage_notes'
+  },
+
+  WATER_CONFIG: {
+    DEFAULT_MAX_GLASSES: 12,
+    MIN_GLASSES: 0
+  },
+
+  // Safe JSON extraction
+  get(key, defaultValue = null) {
+    try {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : defaultValue;
+    } catch (e) {
+      console.warn('LocalStorage read error for key ' + key, e);
+      return defaultValue;
+    }
+  },
+
+  set(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (e) {
+      console.error('LocalStorage write error for key ' + key, e);
+      return false;
+    }
+  },
+
+  remove(key) {
+    try {
+      localStorage.removeItem(key);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+
+  // Purge ALL data instantly (Privacy Emergency Button)
+  purgeAllData() {
+    try {
+      Object.values(this.KEYS).forEach(k => localStorage.removeItem(k));
+      sessionStorage.clear();
+      return true;
+    } catch (e) {
+      console.error('Purge error', e);
+      return false;
+    }
+  },
+
+  // Export encrypted/structured JSON backup for survivor
+  exportData() {
+    const backup = {};
+    Object.entries(this.KEYS).forEach(([name, key]) => {
+      backup[name] = this.get(key, null);
+    });
+    return JSON.stringify(backup, null, 2);
+  },
+
+  // --- Symptom Logs ---
+  getSymptoms() {
+    return this.get(this.KEYS.SYMPTOMS, []);
+  },
+
+  saveSymptom(entry) {
+    const logs = this.getSymptoms();
+    const newEntry = {
+      id: 'sym_' + Date.now(),
+      timestamp: new Date().toISOString(),
+      painLevel: Number(entry.painLevel) || 0,
+      painArea: entry.painArea || 'General Body',
+      bleeding: entry.bleeding || 'None',
+      fever: entry.fever || 'None',
+      dizziness: Boolean(entry.dizziness),
+      bruising: entry.bruising || '',
+      notes: entry.notes || '',
+      redFlags: entry.redFlags || []
+    };
+    logs.unshift(newEntry);
+    this.set(this.KEYS.SYMPTOMS, logs);
+    return newEntry;
+  },
+
+  deleteSymptom(id) {
+    let logs = this.getSymptoms();
+    logs = logs.filter(l => l.id !== id);
+    this.set(this.KEYS.SYMPTOMS, logs);
+    return true;
+  },
+
+  // --- Menstrual / Cycle Logs ---
+  getCycleLogs() {
+    return this.get(this.KEYS.CYCLE, []);
+  },
+
+  saveCycleLog(entry) {
+    const logs = this.getCycleLogs();
+    const newEntry = {
+      id: 'cyc_' + Date.now(),
+      startDate: entry.startDate,
+      endDate: entry.endDate || null,
+      flow: entry.flow || 'Medium',
+      symptoms: entry.symptoms || [],
+      notes: entry.notes || ''
+    };
+    logs.unshift(newEntry);
+    this.set(this.KEYS.CYCLE, logs);
+    return newEntry;
+  },
+
+  // --- Sustenance & Water Logs (Strict Daily Max: 12 Glasses) ---
+  getSustenance() {
+    const today = new Date().toISOString().split('T')[0];
+    return this.getSustenanceAll();
+  },
+
+  getSustenanceAll() {
+    const logs = this.get(this.KEYS.SUSTENANCE, {});
+    const today = new Date().toISOString().split('T')[0];
+    if (!logs[today]) {
+      logs[today] = {
+        date: today,
+        waterGlasses: 0,
+        meals: { breakfast: false, lunch: false, dinner: false, snacks: false },
+        notes: '',
+        deniedFoodOrWater: false
+      };
+      this.set(this.KEYS.SUSTENANCE, logs);
+    }
+    return logs;
+  },
+
+  getSustenanceForDate(dateStr = null) {
+    const targetDate = dateStr || new Date().toISOString().split('T')[0];
+    const logs = this.get(this.KEYS.SUSTENANCE, {});
+    if (!logs[targetDate]) {
+      logs[targetDate] = {
+        date: targetDate,
+        waterGlasses: 0,
+        meals: { breakfast: false, lunch: false, dinner: false, snacks: false },
+        notes: '',
+        deniedFoodOrWater: false
+      };
+      this.set(this.KEYS.SUSTENANCE, logs);
+    }
+    return logs[targetDate];
+  },
+
+  // Add water glass with strict 12 limit
+  addWaterGlass(dateStr = null, maxLimit = 12) {
+    const targetDate = dateStr || new Date().toISOString().split('T')[0];
+    const logs = this.get(this.KEYS.SUSTENANCE, {});
+    if (!logs[targetDate]) {
+      logs[targetDate] = {
+        date: targetDate,
+        waterGlasses: 0,
+        meals: { breakfast: false, lunch: false, dinner: false, snacks: false },
+        notes: '',
+        deniedFoodOrWater: false
+      };
+    }
+    const current = Number(logs[targetDate].waterGlasses) || 0;
+    if (current >= maxLimit) {
+      logs[targetDate].waterGlasses = maxLimit;
+      this.set(this.KEYS.SUSTENANCE, logs);
+      return {
+        date: targetDate,
+        waterGlasses: maxLimit,
+        reachedLimit: true,
+        message: `You have reached the daily tracking limit of ${maxLimit} glasses.`
+      };
+    }
+
+    const nextCount = Math.min(current + 1, maxLimit);
+    logs[targetDate].waterGlasses = nextCount;
+    this.set(this.KEYS.SUSTENANCE, logs);
+    return {
+      date: targetDate,
+      waterGlasses: nextCount,
+      reachedLimit: nextCount >= maxLimit,
+      message: nextCount >= maxLimit ? `You have reached the daily tracking limit of ${maxLimit} glasses.` : null
+    };
+  },
+
+  // Remove water glass (cannot be negative)
+  removeWaterGlass(dateStr = null) {
+    const targetDate = dateStr || new Date().toISOString().split('T')[0];
+    const logs = this.get(this.KEYS.SUSTENANCE, {});
+    if (!logs[targetDate]) {
+      logs[targetDate] = {
+        date: targetDate,
+        waterGlasses: 0,
+        meals: { breakfast: false, lunch: false, dinner: false, snacks: false },
+        notes: '',
+        deniedFoodOrWater: false
+      };
+    }
+    const current = Number(logs[targetDate].waterGlasses) || 0;
+    const nextCount = Math.max(0, current - 1);
+    logs[targetDate].waterGlasses = nextCount;
+    this.set(this.KEYS.SUSTENANCE, logs);
+    return {
+      date: targetDate,
+      waterGlasses: nextCount,
+      reachedLimit: false,
+      message: null
+    };
+  },
+
+  // Set exact water count (strictly clamped between 0 and max)
+  setWaterForDate(dateStr, count, maxLimit = 12) {
+    const targetDate = dateStr || new Date().toISOString().split('T')[0];
+    const logs = this.get(this.KEYS.SUSTENANCE, {});
+    if (!logs[targetDate]) {
+      logs[targetDate] = {
+        date: targetDate,
+        waterGlasses: 0,
+        meals: { breakfast: false, lunch: false, dinner: false, snacks: false },
+        notes: '',
+        deniedFoodOrWater: false
+      };
+    }
+    const clamped = Math.max(0, Math.min(Number(count) || 0, maxLimit));
+    logs[targetDate].waterGlasses = clamped;
+    this.set(this.KEYS.SUSTENANCE, logs);
+    return logs[targetDate];
+  },
+
+  updateTodaySustenance(updater, maxLimit = 12) {
+    const logs = this.getSustenanceAll();
+    const today = new Date().toISOString().split('T')[0];
+    const updated = updater(logs[today]);
+    // Apply strict clamping to prevent any direct bypass
+    if (typeof updated.waterGlasses === 'number') {
+      updated.waterGlasses = Math.max(0, Math.min(updated.waterGlasses, maxLimit));
+    }
+    logs[today] = updated;
+    this.set(this.KEYS.SUSTENANCE, logs);
+    return logs[today];
+  },
+
+  // --- Safety Plan ---
+  getSafetyPlan() {
+    return this.get(this.KEYS.SAFETY_PLAN, {
+      safeLocations: [
+        { name: 'Public Hospital ER / SARC Clinic', address: 'Nearest general emergency center', contact: '24/7 Open' },
+        { name: 'Public Library / Community Center', address: 'Safe daylight shelter with public phones', contact: '' }
+      ],
+      goBagChecklist: [
+        { id: 'item_id', label: 'Government ID / Passport / Birth Certificate', checked: false },
+        { id: 'item_cash', label: 'Emergency Cash / ATM Card', checked: false },
+        { id: 'item_meds', label: 'Critical Prescription Medications', checked: false },
+        { id: 'item_keys', label: 'Spare House & Car Keys', checked: false },
+        { id: 'item_charger', label: 'Phone & Charger / Portable Battery', checked: false },
+        { id: 'item_clothes', label: 'Change of Warm Clothing', checked: false }
+      ],
+      safeCodeWord: '',
+      isolationSteps: 'If denied food, water, or physical movement: Keep a hidden water container. Note times when abusers are asleep. Identify a trusted neighbor or delivery person who can call emergency services on your behalf.'
+    });
+  },
+
+  saveSafetyPlan(plan) {
+    return this.set(this.KEYS.SAFETY_PLAN, plan);
+  },
+
+  // --- SOS Contacts ---
+  getSosContacts() {
+    return this.get(this.KEYS.SOS_CONTACTS, [
+      { name: 'Trusted Friend / Advocate', phone: '', email: '', isPrimary: true }
+    ]);
+  },
+
+  saveSosContacts(contacts) {
+    return this.set(this.KEYS.SOS_CONTACTS, contacts);
+  },
+
+  // --- SOS Dispatch Logs ---
+  getSosLogs() {
+    return this.get(this.KEYS.SOS_LOGS, []);
+  },
+
+  saveSosLog(log) {
+    const logs = this.getSosLogs();
+    logs.unshift(log);
+    this.set(this.KEYS.SOS_LOGS, logs.slice(0, 30));
+    return log;
+  },
+
+  // --- Camouflage Notes & Planner Data ---
+  getCamouflageNotes() {
+    return this.get(this.KEYS.CAMOUFLAGE_NOTES, {
+      scratchpad: '',
+      todos: [
+        { id: 'todo_1', text: 'Pick up groceries & household essentials', completed: false },
+        { id: 'todo_2', text: 'Confirm schedule for this week', completed: true },
+        { id: 'todo_3', text: 'Organize personal study notes', completed: false }
+      ]
+    });
+  },
+
+  saveCamouflageNotes(data) {
+    return this.set(this.KEYS.CAMOUFLAGE_NOTES, data);
+  }
+};
+
+
+/* === auth.js === */
+/**
+ * SurvivorCare AI - Secure Client-Side Authentication & Session Management
+ * Implements Web Crypto PBKDF2 SHA-256, Password Strength Analysis,
+ * Inactivity Auto-Lock, and Device Recognition.
+ */
+const Auth = {
+  currentUser: null,
+  lockTimeoutMinutes: 5,
+  inactivityTimer: null,
+  isLocked: false,
+
+  // Initialize Auth state
+  async init() {
+    this.currentUser = DB.get(DB.KEYS.USER, null);
+    this.resetInactivityTimer();
+    this.setupActivityListeners();
+    this.recordCurrentDeviceSession();
+  },
+
+  // Password Strength Evaluation Engine
+  evaluatePasswordStrength(password) {
+    if (!password) {
+      return { score: 0, label: 'Empty', class: '', feedback: 'Please enter a password.' };
+    }
+
+    let score = 0;
+    const tips = [];
+
+    // Length check
+    if (password.length >= 8) score += 20;
+    if (password.length >= 12) score += 15;
+    if (password.length >= 16) score += 15;
+    if (password.length < 8) tips.push('Use at least 8 characters (12+ recommended).');
+
+    // Variety checks
+    if (/[a-z]/.test(password)) score += 10;
+    else tips.push('Add lowercase letters.');
+
+    if (/[A-Z]/.test(password)) score += 15;
+    else tips.push('Add uppercase letters.');
+
+    if (/[0-9]/.test(password)) score += 15;
+    else tips.push('Add numbers.');
+
+    if (/[^A-Za-z0-9]/.test(password)) score += 15;
+    else tips.push('Add special symbols (!@#$%^&*).');
+
+    // Weak patterns deduction
+    const commonPatterns = ['password', '123456', 'qwerty', 'survivor', 'admin', 'welcome'];
+    const lower = password.toLowerCase();
+    for (const pat of commonPatterns) {
+      if (lower.includes(pat)) {
+        score = Math.max(10, score - 30);
+        tips.push('Avoid common words like "' + pat + '".');
+        break;
+      }
+    }
+
+    // Determine tier
+    let label = 'Weak';
+    let colorClass = 'weak';
+    if (score >= 80) {
+      label = 'Very Strong';
+      colorClass = 'strong';
+    } else if (score >= 60) {
+      label = 'Good';
+      colorClass = 'good';
+    } else if (score >= 40) {
+      label = 'Fair';
+      colorClass = 'fair';
+    }
+
+    return {
+      score: Math.min(100, score),
+      label,
+      class: colorClass,
+      feedback: tips.length ? tips.join(' ') : 'Secure password.'
+    };
+  },
+
+  // Cryptographic Helper: Buffer to Hex
+  bufferToHex(buffer) {
+    return Array.from(new Uint8Array(buffer))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+  },
+
+  // Cryptographic Helper: Hex to Buffer
+  hexToBuffer(hex) {
+    const bytes = new Uint8Array(hex.length / 2);
+    for (let i = 0; i < bytes.length; i++) {
+      bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+    }
+    return bytes;
+  },
+
+  // PBKDF2 Password Hashing using Web Crypto API
+  async hashPassword(password, saltHex = null) {
+    const enc = new TextEncoder();
+    let saltBytes;
+    if (saltHex) {
+      saltBytes = this.hexToBuffer(saltHex);
+    } else {
+      saltBytes = crypto.getRandomValues(new Uint8Array(16));
+    }
+
+    const keyMaterial = await crypto.subtle.importKey(
+      'raw',
+      enc.encode(password),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveBits']
+    );
+
+    const derivedBits = await crypto.subtle.deriveBits(
+      {
+        name: 'PBKDF2',
+        salt: saltBytes,
+        iterations: 100000,
+        hash: 'SHA-256'
+      },
+      keyMaterial,
+      256
+    );
+
+    return {
+      salt: this.bufferToHex(saltBytes),
+      hash: this.bufferToHex(derivedBits)
+    };
+  },
+
+  // Register New Survivor Account
+  async register(username, password, recoveryHint = '') {
+    if (!username || username.trim().length < 3) {
+      throw new Error('Please choose a username or pseudonym of at least 3 characters.');
+    }
+    if (!password || password.length < 8) {
+      throw new Error('Password must be at least 8 characters long for safety.');
+    }
+
+    const strength = this.evaluatePasswordStrength(password);
+    if (strength.score < 40) {
+      throw new Error('Please choose a stronger password. ' + strength.feedback);
+    }
+
+    const { salt, hash } = await this.hashPassword(password);
+    const user = {
+      username: username.trim(),
+      salt,
+      hash,
+      recoveryHint: recoveryHint.trim(),
+      createdAt: new Date().toISOString(),
+      discreetModeEnabled: false,
+      autoLockMinutes: 5
+    };
+
+    DB.set(DB.KEYS.USER, user);
+    this.currentUser = { username: user.username, discreetModeEnabled: user.discreetModeEnabled, autoLockMinutes: user.autoLockMinutes };
+    this.recordCurrentDeviceSession();
+    return this.currentUser;
+  },
+
+  // Login
+  async login(username, password) {
+    const stored = DB.get(DB.KEYS.USER, null);
+    if (!stored) {
+      throw new Error('No account found on this device. Please create a safe profile first.');
+    }
+    if (stored.username.toLowerCase() !== username.trim().toLowerCase()) {
+      throw new Error('Invalid username or password.');
+    }
+
+    const { hash } = await this.hashPassword(password, stored.salt);
+    if (hash !== stored.hash) {
+      throw new Error('Invalid username or password. Please re-check.');
+    }
+
+    this.currentUser = {
+      username: stored.username,
+      discreetModeEnabled: Boolean(stored.discreetModeEnabled),
+      autoLockMinutes: stored.autoLockMinutes || 5
+    };
+    this.isLocked = false;
+    this.recordCurrentDeviceSession();
+    this.resetInactivityTimer();
+    return this.currentUser;
+  },
+
+  // Logout
+  logout() {
+    this.currentUser = null;
+    this.isLocked = false;
+    if (this.inactivityTimer) clearTimeout(this.inactivityTimer);
+  },
+
+  // Auto-Lock Inactivity Handler
+  resetInactivityTimer() {
+    if (this.inactivityTimer) clearTimeout(this.inactivityTimer);
+    if (!this.currentUser) return;
+
+    const timeoutMs = (this.currentUser.autoLockMinutes || 5) * 60 * 1000;
+    this.inactivityTimer = setTimeout(() => {
+      this.triggerAutoLock();
+    }, timeoutMs);
+  },
+
+  triggerAutoLock() {
+    if (!this.currentUser) return;
+    this.isLocked = true;
+    if (window.App && typeof window.App.showLockScreen === 'function') {
+      window.App.showLockScreen();
+    }
+  },
+
+  setupActivityListeners() {
+    const events = ['mousedown', 'keydown', 'touchstart', 'scroll'];
+    events.forEach(evt => {
+      window.addEventListener(evt, () => {
+        if (!this.isLocked) {
+          this.resetInactivityTimer();
+        }
+      }, { passive: true });
+    });
+  },
+
+  // Active Sessions & Device Recognition (Truthful Implementation)
+  getDeviceInfo() {
+    const ua = navigator.userAgent;
+    let browser = 'Unknown Browser';
+    if (ua.includes('Edg/')) browser = 'Microsoft Edge';
+    else if (ua.includes('Chrome/')) browser = 'Google Chrome';
+    else if (ua.includes('Firefox/')) browser = 'Mozilla Firefox';
+    else if (ua.includes('Safari/') && !ua.includes('Chrome/')) browser = 'Apple Safari';
+
+    let os = 'Unknown OS';
+    if (ua.includes('Windows')) os = 'Windows';
+    else if (ua.includes('Macintosh') || ua.includes('Mac OS')) os = 'macOS';
+    else if (ua.includes('Android')) os = 'Android';
+    else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS';
+    else if (ua.includes('Linux')) os = 'Linux';
+
+    // Unique per-device storage ID
+    let deviceId = localStorage.getItem('survivorcare_device_id');
+    if (!deviceId) {
+      deviceId = 'dev_' + Math.random().toString(36).substring(2, 10);
+      localStorage.setItem('survivorcare_device_id', deviceId);
+    }
+
+    return {
+      deviceId,
+      browser,
+      os,
+      screen: `${window.screen.width}x${window.screen.height}`
+    };
+  },
+
+  recordCurrentDeviceSession() {
+    const info = this.getDeviceInfo();
+    const sessions = DB.get(DB.KEYS.SESSIONS, []);
+    const now = new Date().toISOString();
+
+    const existingIdx = sessions.findIndex(s => s.deviceId === info.deviceId);
+    if (existingIdx >= 0) {
+      sessions[existingIdx].lastActive = now;
+      sessions[existingIdx].browser = info.browser;
+      sessions[existingIdx].os = info.os;
+      sessions[existingIdx].isCurrent = true;
+    } else {
+      sessions.push({
+        id: 'sess_' + Date.now(),
+        deviceId: info.deviceId,
+        browser: info.browser,
+        os: info.os,
+        screen: info.screen,
+        loginTime: now,
+        lastActive: now,
+        isCurrent: true
+      });
+    }
+
+    // Mark others as not current
+    sessions.forEach(s => {
+      if (s.deviceId !== info.deviceId) s.isCurrent = false;
+    });
+
+    DB.set(DB.KEYS.SESSIONS, sessions);
+    return sessions;
+  },
+
+  getActiveSessions() {
+    return DB.get(DB.KEYS.SESSIONS, []);
+  },
+
+  revokeSession(sessionId) {
+    let sessions = this.getActiveSessions();
+    const info = this.getDeviceInfo();
+    const target = sessions.find(s => s.id === sessionId);
+    if (target && target.deviceId === info.deviceId) {
+      sessions = sessions.filter(s => s.id !== sessionId);
+      DB.set(DB.KEYS.SESSIONS, sessions);
+      this.logout();
+      return { loggedOutCurrent: true };
+    }
+    sessions = sessions.filter(s => s.id !== sessionId);
+    DB.set(DB.KEYS.SESSIONS, sessions);
+    return { loggedOutCurrent: false };
+  }
+};
+
+
+/* === mental_health.js === */
+/**
+ * SurvivorCare AI - Trauma-Informed Mental Health Support
+ * Provides grounding exercises (5-4-3-2-1), box breathing, affirmations,
+ * and supportive offline chat. Does not replace a licensed therapist.
+ */
+const MentalHealth = {
+  // Box Breathing State
+  breathingInterval: null,
+  breathingSeconds: 4,
+  breathingPhaseIndex: 0,
+  breathingCycleCount: 0,
+  breathingPhases: [
+    { name: 'Inhale Slowly', class: 'inhale', duration: 4 },
+    { name: 'Hold Gently', class: 'hold', duration: 4 },
+    { name: 'Exhale Smoothly', class: 'exhale', duration: 4 },
+    { name: 'Rest / Pause', class: 'rest', duration: 4 }
+  ],
+
+  // Trauma-Informed Affirmations Library
+  affirmations: [
+    "What happened was not your fault. You are not to blame.",
+    "You survived. Your body and mind did what was necessary to keep you alive.",
+    "You have the right to feel whatever you are feeling right now—anger, sadness, numbness, or shock.",
+    "You deserve safety, food, clean water, and compassionate medical care.",
+    "Healing does not have a strict timeline. You can take this one breath and one moment at a time.",
+    "You do not have to make major decisions right now. Your safety and grounding come first.",
+    "Your boundaries are valid, and you have complete ownership over your body and your story.",
+    "You are worthy of support, respect, and peaceful living."
+  ],
+
+  // Curated Rule-Based Offline Response Knowledgebase
+  // Clearly labeled as deterministic rule-based offline support, not an AI LLM or therapist
+  offlineResponses: [
+    {
+      keywords: ['panic', 'anxiety', 'scared', 'shaking', 'hyperventilat', 'breath', 'terrified', 'fear'],
+      reply: "Take a gentle breath with me right now. You are physically safe in this immediate second. Panic is your nervous system trying to protect you, but the danger is not in this very room right now. Would you like to try the Box Breathing exercise or the 5-4-3-2-1 Grounding tool on this page? They can help signal your brain that you are safe."
+    },
+    {
+      keywords: ['guilt', 'fault', 'blame', 'regret', 'stupid', 'should have', 'my fault', 'ashamed', 'shame'],
+      reply: "Please hear this clearly: What happened is 100% the responsibility of the person who harmed you. It was NEVER your fault. Nothing you wore, drank, said, or did justifies assault or abuse. Self-blame is a common coping response to regain a sense of control, but you are not to blame."
+    },
+    {
+      keywords: ['flashback', 'reliving', 'memories', 'nightmare', 'vision', 'remembering'],
+      reply: "A flashback can feel so vivid, but it is a memory, not the present reality. Feel the ground beneath your feet. Touch a solid surface near you. Look at 3 blue or green objects in your room. Remind yourself: 'I am here, in the present, and the memory cannot hurt me right now.'"
+    },
+    {
+      keywords: ['water', 'food', 'starv', 'hungry', 'thirsty', 'denied', 'locked', 'trapped'],
+      reply: "Denying someone food or water is severe neglect and abuse. If you are trapped or being withheld basic necessities, please check our Sustenance Tracker to log what you can safely access, and view our Safety Plan to find emergency shelter, discreet community support, or safe contacts who can intervene."
+    },
+    {
+      keywords: ['therapist', 'doctor', 'counsel', 'hospital', 'clinic', 'exam', 'sarc'],
+      reply: "I am an offline support companion, not a licensed therapist or physician. Reaching out to a specialized trauma counselor or visiting a Sexual Assault Referral Centre (SARC) / ER can provide compassionate medical care, STI prevention (PEP within 72h), and emotional support at your own pace."
+    },
+    {
+      keywords: ['pep', 'hiv', 'sti', 'std', 'infection', 'disease'],
+      reply: "If you have concerns about HIV or STIs, please note that HIV PEP (Post-Exposure Prophylaxis) must be started within 72 hours of exposure to be effective. Check our HIV/STI section for a live countdown and guidance on accessing confidential clinical assessment."
+    },
+    {
+      keywords: ['pregnant', 'pregnancy', 'plan b', 'morning after', 'period'],
+      reply: "You have compassionate options. Emergency contraception (like Plan B) is most effective when taken as soon as possible within 72 hours (or Ella up to 120 hours). Home pregnancy tests are generally accurate 14 to 21 days after exposure. Visit our Pregnancy Support tab for clear timelines."
+    },
+    {
+      keywords: ['alone', 'lonely', 'nobody', 'isolated', 'no one understands'],
+      reply: "You may feel deeply isolated, especially if people around you are unsupportive, but you are not alone. Millions of survivors have walked this path, and confidential advocates are available 24/7 at hotlines like RAINN (1-800-656-4673) where you can speak or text without giving your real name."
+    }
+  ],
+
+  defaultResponse: "I hear you, and your feelings are completely valid. Remember that SurvivorCare AI is an offline support tool and does not replace a licensed therapist. If you are feeling overwhelmed, you can try our grounding exercises, explore our verified support directory, or connect with a 24/7 crisis advocate whenever you feel ready.",
+
+  // Get response for chat
+  getBotResponse(userInput) {
+    const text = userInput.toLowerCase();
+    for (const item of this.offlineResponses) {
+      if (item.keywords.some(k => text.includes(k))) {
+        return item.reply;
+      }
+    }
+    return this.defaultResponse;
+  },
+
+  // Get random affirmation
+  getRandomAffirmation() {
+    const idx = Math.floor(Math.random() * this.affirmations.length);
+    return this.affirmations[idx];
+  },
+
+  // Breathing Box Engine
+  startBreathing(onTick) {
+    if (this.breathingInterval) clearInterval(this.breathingInterval);
+    
+    this.breathingPhaseIndex = 0;
+    this.breathingSeconds = this.breathingPhases[0].duration;
+    
+    const trigger = () => {
+      const phase = this.breathingPhases[this.breathingPhaseIndex];
+      if (onTick) {
+        onTick({
+          phaseName: phase.name,
+          phaseClass: phase.class,
+          secondsLeft: this.breathingSeconds,
+          cycles: this.breathingCycleCount
+        });
+      }
+
+      this.breathingSeconds--;
+      if (this.breathingSeconds < 0) {
+        this.breathingPhaseIndex = (this.breathingPhaseIndex + 1) % this.breathingPhases.length;
+        this.breathingSeconds = this.breathingPhases[this.breathingPhaseIndex].duration;
+        if (this.breathingPhaseIndex === 0) {
+          this.breathingCycleCount++;
+        }
+      }
+    };
+
+    trigger();
+    this.breathingInterval = setInterval(trigger, 1000);
+  },
+
+  stopBreathing() {
+    if (this.breathingInterval) {
+      clearInterval(this.breathingInterval);
+      this.breathingInterval = null;
+    }
+    this.breathingPhaseIndex = 0;
+    this.breathingSeconds = 4;
+  }
+};
+
+
+/* === physical_health.js === */
+/**
+ * SurvivorCare AI / SheCare AI - Physical Health & Sustenance Log
+ * Tracks physical recovery, injuries, pain, fever, bleeding, dizziness,
+ * and daily sustenance (food/water). Provides non-diagnostic urgent-care flags.
+ */
+const PhysicalHealth = {
+  // Evaluate Red Flag Symptoms (Non-diagnostic safety guidance)
+  checkRedFlags(data) {
+    const flags = [];
+    const pain = Number(data.painLevel) || 0;
+    
+    if (pain >= 8) {
+      flags.push({
+        severity: 'critical',
+        title: 'Severe Pain (Level ' + pain + '/10)',
+        message: 'Severe acute pain requires immediate clinical evaluation to check for internal injuries or physical trauma.'
+      });
+    }
+
+    if (data.bleeding === 'Heavy' || data.bleeding === 'Abnormal Continuous') {
+      flags.push({
+        severity: 'critical',
+        title: 'Heavy or Abnormal Bleeding',
+        message: 'Heavy bleeding soaking through more than two sanitary pads per hour, or bleeding lasting multiple days after assault, warrants emergency medical assessment.'
+      });
+    }
+
+    if (data.fever === 'High (>=101°F / 38.3°C)' || data.fever === 'Severe with Chills') {
+      flags.push({
+        severity: 'warning',
+        title: 'High Fever / Signs of Infection',
+        message: 'Fever accompanied by pelvic, abdominal, or genital pain may indicate an acute infection requiring clinical antibiotics or medical tests.'
+      });
+    }
+
+    if (data.dizziness && (data.bleeding !== 'None' || pain >= 5)) {
+      flags.push({
+        severity: 'critical',
+        title: 'Dizziness with Trauma / Bleeding',
+        message: 'Dizziness, lightheadedness, or feeling faint alongside bleeding or physical trauma can indicate blood loss, shock, or severe dehydration.'
+      });
+    }
+
+    if (data.painArea === 'Neck / Throat' || (data.notes && data.notes.toLowerCase().includes('strangl'))) {
+      flags.push({
+        severity: 'emergency',
+        title: 'Potential Strangulation / Airway Risk',
+        message: 'CRITICAL: Strangulation or neck pressure can cause delayed internal swelling, vocal changes, or carotid injury hours or days later. Immediate emergency room evaluation is vital, even if no external marks appear.'
+      });
+    }
+
+    return flags;
+  },
+
+  // Save new symptom entry
+  logSymptom(formData) {
+    const redFlags = this.checkRedFlags(formData);
+    const entry = {
+      painLevel: formData.painLevel,
+      painArea: formData.painArea,
+      bleeding: formData.bleeding,
+      fever: formData.fever,
+      dizziness: formData.dizziness,
+      bruising: formData.bruising,
+      notes: formData.notes,
+      redFlags
+    };
+    return DB.saveSymptom(entry);
+  },
+
+  // Hydration Guidance (Clarifying that tracking limit of 12 is a software limit, not universal clinical prescription)
+  getHydrationGuidance(glasses) {
+    const count = Number(glasses) || 0;
+    if (count === 0) {
+      return {
+        status: 'None Recorded',
+        class: 'badge-danger',
+        tip: 'No water recorded today. If you are experiencing dehydration, take small, frequent sips of clean water if safely accessible.'
+      };
+    } else if (count < 4) {
+      return {
+        status: 'Low Intake',
+        class: 'badge-warning',
+        tip: 'Your body needs fluids to help heal from trauma. Aim to drink water steadily through the day if safe.'
+      };
+    } else if (count < 12) {
+      return {
+        status: 'Logged (' + count + '/12)',
+        class: 'badge-success',
+        tip: 'Steady fluid intake logged. Note: Hydration needs vary by person, weather, and physical circumstances.'
+      };
+    } else {
+      return {
+        status: 'Limit Reached (12/12)',
+        class: 'badge-peach',
+        tip: 'You have reached the daily tracking limit of 12 glasses. Note: This is an app tracking limit; personal hydration requirements vary.'
+      };
+    }
+  }
+};
+
+
+/* === period_tracker.js === */
+/**
+ * SurvivorCare AI / SheCare AI - Menstrual & Cycle Tracker
+ * Records cycle dates, symptoms, and flow.
+ * All predictions are explicitly labelled statistical estimates.
+ * Implements timezone-safe date math for month and year boundaries.
+ */
+const PeriodTracker = {
+  // Validate YYYY-MM-DD format and real calendar date
+  isValidDateString(dateStr) {
+    if (!dateStr || typeof dateStr !== 'string') return false;
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return false;
+    const [y, m, d] = parts.map(Number);
+    if (isNaN(y) || isNaN(m) || isNaN(d)) return false;
+    if (y < 1970 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) return false;
+    
+    // Check with UTC date to ensure valid calendar day (e.g. Feb 31 rejected)
+    const test = new Date(Date.UTC(y, m - 1, d));
+    return test.getUTCFullYear() === y && (test.getUTCMonth() + 1) === m && test.getUTCDate() === d;
+  },
+
+  // Timezone-safe UTC date addition
+  addDaysToDateString(dateStr, daysToAdd) {
+    if (!this.isValidDateString(dateStr)) return null;
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const utcMs = Date.UTC(y, m - 1, d) + (daysToAdd * 86400000);
+    const res = new Date(utcMs);
+    const resY = res.getUTCFullYear();
+    const resM = String(res.getUTCMonth() + 1).padStart(2, '0');
+    const resD = String(res.getUTCDate()).padStart(2, '0');
+    return `${resY}-${resM}-${resD}`;
+  },
+
+  // Calculate cycle difference in days (UTC)
+  diffInDays(startStr, endStr) {
+    if (!this.isValidDateString(startStr) || !this.isValidDateString(endStr)) return null;
+    const [y1, m1, d1] = startStr.split('-').map(Number);
+    const [y2, m2, d2] = endStr.split('-').map(Number);
+    const ms1 = Date.UTC(y1, m1 - 1, d1);
+    const ms2 = Date.UTC(y2, m2 - 1, d2);
+    return Math.round((ms2 - ms1) / 86400000);
+  },
+
+  // Calculate cycle statistics
+  calculateStats(customLogs = null) {
+    const rawLogs = customLogs || DB.getCycleLogs();
+    if (!rawLogs || !Array.isArray(rawLogs) || rawLogs.length === 0) {
+      return {
+        hasData: false,
+        averageCycleDays: 28,
+        estimatedNextPeriod: null,
+        estimatedFertileStart: null,
+        estimatedFertileEnd: null,
+        disclaimer: 'Predictions are statistical estimates only. Menstrual timing varies widely with stress and trauma.'
+      };
+    }
+
+    // Filter valid dates and sort ascending
+    const validLogs = rawLogs
+      .filter(l => l && this.isValidDateString(l.startDate))
+      .sort((a, b) => a.startDate.localeCompare(b.startDate));
+
+    if (validLogs.length === 0) {
+      return {
+        hasData: false,
+        averageCycleDays: 28,
+        estimatedNextPeriod: null,
+        estimatedFertileStart: null,
+        estimatedFertileEnd: null,
+        disclaimer: 'No valid calendar dates found.'
+      };
+    }
+
+    const cycleLengths = [];
+    for (let i = 1; i < validLogs.length; i++) {
+      const diff = this.diffInDays(validLogs[i - 1].startDate, validLogs[i].startDate);
+      // Valid historical cycle lengths typically between 18 and 50 days
+      if (diff !== null && diff >= 18 && diff <= 55) {
+        cycleLengths.push(diff);
+      }
+    }
+
+    const avgDays = cycleLengths.length > 0
+      ? Math.round(cycleLengths.reduce((a, b) => a + b, 0) / cycleLengths.length)
+      : 28;
+
+    const latest = validLogs[validLogs.length - 1];
+    
+    // Predicted next period date using safe UTC math
+    const estimatedNextPeriod = this.addDaysToDateString(latest.startDate, avgDays);
+    // Estimated fertile window: approx 17 days to 11 days before next estimated period
+    const estimatedFertileStart = this.addDaysToDateString(latest.startDate, avgDays - 17);
+    const estimatedFertileEnd = this.addDaysToDateString(latest.startDate, avgDays - 11);
+
+    return {
+      hasData: true,
+      lastRecordedDate: latest.startDate,
+      averageCycleDays: avgDays,
+      estimatedNextPeriod,
+      estimatedFertileStart,
+      estimatedFertileEnd,
+      disclaimer: 'Statistical estimate only. Acute trauma, severe stress, emergency contraception, or nutritional deprivation cause unpredictable variations. Never use to rule out pregnancy.'
+    };
+  },
+
+  // Save new period entry
+  logPeriod(entry) {
+    if (!entry || !entry.startDate) {
+      throw new Error('Please select a cycle start date.');
+    }
+    if (!this.isValidDateString(entry.startDate)) {
+      throw new Error('Invalid date format. Please use a valid calendar date.');
+    }
+    return DB.saveCycleLog(entry);
+  }
+};
+
+
+/* === pregnancy_sti.js === */
+/**
+ * SurvivorCare AI - Pregnancy & HIV/STI Support
+ * Provides urgent HIV PEP (72-hour window) countdown, STI educational facts,
+ * and responsible pregnancy test guidance. Strictly non-diagnostic.
+ */
+const PregnancySTI = {
+  // HIV PEP 72-Hour Calculator
+  calculatePepStatus(exposureDateTimeStr) {
+    if (!exposureDateTimeStr) return null;
+
+    const exposureTime = new Date(exposureDateTimeStr).getTime();
+    const now = Date.now();
+    const diffMs = now - exposureTime;
+    const diffHours = diffMs / (1000 * 60 * 60);
+    const windowHours = 72;
+    const hoursRemaining = windowHours - diffHours;
+
+    if (diffHours < 0) {
+      return {
+        status: 'invalid',
+        message: 'Selected date/time is in the future. Please select when the incident occurred.'
+      };
+    }
+
+    if (hoursRemaining > 0) {
+      const hoursInt = Math.floor(hoursRemaining);
+      const minutesInt = Math.floor((hoursRemaining - hoursInt) * 60);
+      const isUrgent = hoursRemaining < 24;
+
+      return {
+        status: 'active',
+        hoursRemaining: hoursRemaining.toFixed(1),
+        countdownText: `${hoursInt} hours, ${minutesInt} mins remaining`,
+        severity: isUrgent ? 'critical' : 'urgent',
+        badgeClass: isUrgent ? 'badge-danger' : 'badge-warning',
+        guidance: isUrgent
+          ? 'URGENT: Less than 24 hours remain in the 72-hour PEP window. Go immediately to an Emergency Room, Sexual Assault Referral Centre (SARC), or Urgent Care.'
+          : 'TIME-SENSITIVE: You are within the 72-hour window. PEP (Post-Exposure Prophylaxis) is most effective the sooner it is started. Please consult an emergency clinician or SARC clinic right away.'
+      };
+    } else {
+      const hoursPast = Math.abs(hoursRemaining).toFixed(0);
+      return {
+        status: 'expired',
+        hoursRemaining: 0,
+        hoursPast,
+        severity: 'neutral',
+        badgeClass: 'badge-neutral',
+        guidance: `The 72-hour window has passed (${hoursPast} hours ago). While PEP is generally not prescribed past 72 hours, clinical assessment, baseline STI/HIV lab testing, and follow-up medical care are still very important. Please visit a clinic or healthcare provider.`
+      };
+    }
+  },
+
+  // Pregnancy Test Timeline Calculator
+  calculatePregnancyTestDates(incidentDateStr, nextPeriodDateStr) {
+    if (!incidentDateStr) return null;
+
+    const incidentDate = new Date(incidentDateStr);
+    
+    // Earliest home urine test: 14 days after incident
+    const earliestTestDate = new Date(incidentDate);
+    earliestTestDate.setDate(incidentDate.getDate() + 14);
+
+    // High accuracy home urine test: 21 days after incident
+    const accurateTestDate = new Date(incidentDate);
+    accurateTestDate.setDate(incidentDate.getDate() + 21);
+
+    // Emergency Contraceptive Windows from incident
+    const now = new Date();
+    const hoursSinceIncident = (now - incidentDate) / (1000 * 60 * 60);
+
+    return {
+      hoursSinceIncident: Math.max(0, Math.floor(hoursSinceIncident)),
+      planBEligible: hoursSinceIncident <= 72,
+      ellaEligible: hoursSinceIncident <= 120,
+      iudEligible: hoursSinceIncident <= 120,
+      earliestTestDate: earliestTestDate.toISOString().split('T')[0],
+      accurateTestDate: accurateTestDate.toISOString().split('T')[0]
+    };
+  },
+
+  // STI Information Library
+  stiData: [
+    {
+      name: 'HIV (Human Immunodeficiency Virus)',
+      transmission: 'Unprotected penetrative sex, broken mucosal membranes, blood contact',
+      prophylaxis: 'PEP (Post-Exposure Prophylaxis) within 72 hours (antiretroviral regimen for 28 days)',
+      testingTimeline: 'Baseline test immediately, then repeat at 4–6 weeks and 3 months (lab blood test)',
+      notes: 'Symptoms like swollen glands, sore throat, or mild fever may or may not occur and cannot diagnose or rule out HIV. Clinical testing is required.'
+    },
+    {
+      name: 'Chlamydia & Gonorrhea',
+      transmission: 'Genital, oral, or anal contact',
+      prophylaxis: 'Commonly prescribed presumptive antibiotics (e.g. Ceftriaxone + Doxycycline) at emergency/SARC exam',
+      testingTimeline: 'NAAT urine test or swab 1 to 2 weeks post-incident',
+      notes: 'Frequently 100% asymptomatic in women. Highly treatable with standard antibiotics when evaluated by a clinician.'
+    },
+    {
+      name: 'Trichomoniasis',
+      transmission: 'Parasitic protozoan spread via genital contact',
+      prophylaxis: 'Presumptive single-dose Metronidazole or Tinidazole often offered at clinical exam',
+      testingTimeline: 'Lab swab or NAAT test 1 to 3 weeks post-incident',
+      notes: 'Can cause itching, discharge, or burning, or remain without symptoms.'
+    },
+    {
+      name: 'Hepatitis B (HBV)',
+      transmission: 'Blood, semen, and other bodily fluids',
+      prophylaxis: 'Hepatitis B vaccine and/or Hepatitis B Immune Globulin (HBIG) within 14 days for unvaccinated individuals',
+      testingTimeline: 'Baseline blood panel, repeat at 3 and 6 months',
+      notes: 'Hospital SARC staff can check your vaccination status and administer protective doses if indicated.'
+    },
+    {
+      name: 'Syphilis',
+      transmission: 'Direct contact with a syphilis chancre/sore',
+      prophylaxis: 'Penicillin or doxycycline prescribed upon clinical suspicion or confirmed exposure',
+      testingTimeline: 'Serological blood test (RPR/VDRL) at baseline, 6 weeks, and 3 months',
+      notes: 'Painless sores may appear 3 weeks later and can easily go unnoticed. Curable with antibiotics.'
+    }
+  ]
+};
+
+
+/* === sos.js === */
+/**
+ * SurvivorCare AI / SheCare AI - SOS Emergency Alert System
+ * Manages trusted emergency contacts, native SMS/tel dispatch, truthful status reporting,
+ * and an offline Web Audio distress siren. Never falsely claims message delivery.
+ */
+const SOS = {
+  audioCtx: null,
+  sirenOscillator: null,
+  sirenInterval: null,
+  isSirenPlaying: false,
+
+  // Validate Trusted Contact Info
+  validateContact(contact) {
+    if (!contact) {
+      return { valid: false, error: 'Contact information is required.' };
+    }
+    const name = (contact.name || '').trim();
+    const phone = (contact.phone || '').trim().replace(/[^0-9+]/g, '');
+
+    if (!name || name.length < 2) {
+      return { valid: false, error: 'Please enter a valid contact name or advocate title.' };
+    }
+    if (!phone || phone.length < 7) {
+      return { valid: false, error: 'Please enter a valid telephone number with country code (e.g. +92... or +91... or +1...).' };
+    }
+    return { valid: true, error: null, cleanPhone: phone };
+  },
+
+  // Format SOS Distress Message with survivor authorization for location
+  generateDistressMessage(contactName = 'Trusted Contact', customNote = '', includeCoords = false, coords = null) {
+    let msg = `EMERGENCY ALERT: This is an urgent distress notification sent via SheCare AI. I need your immediate assistance or safe check-in.`;
+    if (customNote && customNote.trim().length > 0) {
+      msg += ` Note: ${customNote.trim()}`;
+    }
+    // Only include location if survivor gave explicit permission
+    if (includeCoords && coords && coords.latitude && coords.longitude) {
+      msg += ` Approximate location (Authorized by survivor): https://maps.google.com/?q=${coords.latitude.toFixed(5)},${coords.longitude.toFixed(5)}`;
+    }
+    msg += ` [Sent: ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}]`;
+    return msg;
+  },
+
+  // Native Device SMS Dispatch (Truthful device handover)
+  dispatchViaDeviceSms(phone, message) {
+    const check = this.validateContact({ name: 'Recipient', phone });
+    if (!check.valid) {
+      throw new Error(check.error);
+    }
+    const cleanPhone = check.cleanPhone;
+    const encodedBody = encodeURIComponent(message);
+    
+    // Construct SMS URI (compatible with iOS, Android, and desktop messaging clients)
+    const smsUrl = `sms:${cleanPhone}?body=${encodedBody}`;
+    
+    // Truthful log record: Opening the app is NOT confirmation of delivery
+    const log = {
+      id: 'sos_' + Date.now(),
+      timestamp: new Date().toISOString(),
+      channel: 'Device SMS App Handshake',
+      contactPhone: cleanPhone,
+      status: 'OPENED_IN_MESSAGING_APP',
+      statusText: 'Opened native SMS composer. You must tap Send to transmit. Cellular carrier coverage required.',
+      truthfulNote: 'Opening SMS app does not confirm cellular delivery.'
+    };
+    DB.saveSosLog(log);
+
+    // Handover to OS
+    window.location.href = smsUrl;
+    return log;
+  },
+
+  // Native Phone Call Dispatch
+  dispatchViaPhoneCall(phone) {
+    const check = this.validateContact({ name: 'Recipient', phone });
+    if (!check.valid) {
+      throw new Error(check.error);
+    }
+    const cleanPhone = check.cleanPhone;
+    const telUrl = `tel:${cleanPhone}`;
+
+    const log = {
+      id: 'sos_' + Date.now(),
+      timestamp: new Date().toISOString(),
+      channel: 'Device Phone Dialer',
+      contactPhone: cleanPhone,
+      status: 'DIALER_OPENED',
+      statusText: 'Opened native phone dialer for immediate calling.',
+      truthfulNote: 'Call placement depends on local carrier connection.'
+    };
+    DB.saveSosLog(log);
+
+    window.location.href = telUrl;
+    return log;
+  },
+
+  // Backend / Server Webhook Dispatch (With Truthful Network Status)
+  async dispatchViaServer(contactPhone, message) {
+    const check = this.validateContact({ name: 'Recipient', phone: contactPhone });
+    if (!check.valid) {
+      throw new Error(check.error);
+    }
+    const cleanPhone = check.cleanPhone;
+
+    const log = {
+      id: 'sos_' + Date.now(),
+      timestamp: new Date().toISOString(),
+      channel: 'Server SMS Gateway',
+      contactPhone: cleanPhone,
+      status: 'PENDING_NETWORK',
+      statusText: 'Attempting connection with dispatch gateway...',
+      truthfulNote: 'Remote delivery cannot be guaranteed without active network connection.'
+    };
+
+    try {
+      // Check online status first
+      if (!navigator.onLine) {
+        log.status = 'FAILED_OFFLINE';
+        log.statusText = 'Failed: Device is offline. No internet connection available.';
+        DB.saveSosLog(log);
+        return log;
+      }
+
+      const res = await fetch('/api/sos/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: cleanPhone, message })
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        log.status = 'FAILED_SERVER_ERROR';
+        log.statusText = 'Failed: Dispatch server returned error (' + (errData.error || res.status) + ').';
+      } else {
+        const data = await res.json();
+        log.status = data.status || 'DISPATCHED_TO_CARRIER';
+        log.statusText = data.message || 'Alert successfully accepted by carrier gateway.';
+      }
+    } catch (err) {
+      // Backend not running or unreachable
+      log.status = 'FAILED_UNREACHABLE';
+      log.statusText = 'Server unreachable (Offline mode). Remote message not sent. Please use Native SMS or Phone dialer.';
+    }
+
+    DB.saveSosLog(log);
+    return log;
+  },
+
+  // Audio Distress Siren (Pure Web Audio API - 100% Offline)
+  startSiren() {
+    if (this.isSirenPlaying) return;
+
+    try {
+      const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtxClass) {
+        alert('Web Audio API not supported in this browser.');
+        return;
+      }
+
+      this.audioCtx = new AudioCtxClass();
+      const osc = this.audioCtx.createOscillator();
+      const gain = this.audioCtx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(800, this.audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.5, this.audioCtx.currentTime);
+
+      osc.connect(gain);
+      gain.connect(this.audioCtx.destination);
+      osc.start();
+
+      let freqToggle = false;
+      this.sirenInterval = setInterval(() => {
+        if (!this.audioCtx || this.audioCtx.state === 'closed') return;
+        const targetFreq = freqToggle ? 960 : 650;
+        osc.frequency.exponentialRampToValueAtTime(targetFreq, this.audioCtx.currentTime + 0.35);
+        freqToggle = !freqToggle;
+      }, 400);
+
+      this.sirenOscillator = osc;
+      this.isSirenPlaying = true;
+    } catch (e) {
+      console.warn('Audio Siren error:', e);
+    }
+  },
+
+  stopSiren() {
+    if (!this.isSirenPlaying) return;
+
+    if (this.sirenInterval) {
+      clearInterval(this.sirenInterval);
+      this.sirenInterval = null;
+    }
+    if (this.sirenOscillator) {
+      try {
+        this.sirenOscillator.stop();
+        this.sirenOscillator.disconnect();
+      } catch (e) {}
+      this.sirenOscillator = null;
+    }
+    if (this.audioCtx) {
+      try {
+        this.audioCtx.close();
+      } catch (e) {}
+      this.audioCtx = null;
+    }
+    this.isSirenPlaying = false;
+  }
+};
+
+
+/* === safety_plan.js === */
+/**
+ * SurvivorCare AI / SheCare AI - Safety Plan Builder & Verified Support Directory
+ * Empowers survivors to prepare personal safety strategies and access verified
+ * international & national crisis, medical, legal, and sustenance lifelines.
+ * Includes independently verified official resources for Pakistan, India, US, UK, and Canada.
+ */
+const SafetyPlan = {
+  // Verified Support Directory (Real, verified, non-fictional resources)
+  verifiedDirectory: [
+    // --- PAKISTAN RESOURCES ---
+    {
+      id: 'mohr_pk',
+      name: 'Ministry of Human Rights (MOHR) Helpline',
+      category: 'Legal Advocacy',
+      country: 'Pakistan',
+      phone: '1099',
+      text: null,
+      web: 'https://mohr.gov.pk',
+      availability: 'Toll-Free 24/7 across Pakistan',
+      officialSource: 'Government of Pakistan, Ministry of Human Rights',
+      description: 'Official federal government helpline providing free legal advice, emergency human rights violation reporting, and crisis referrals for women facing abuse or confinement.'
+    },
+    {
+      id: 'madadgaar_pk',
+      name: 'Madadgaar National Helpline',
+      category: 'Immediate Crisis',
+      country: 'Pakistan',
+      phone: '1098',
+      text: null,
+      web: 'http://www.madadgaar.org',
+      availability: 'Daily 9:00 AM – 9:00 PM PKT (Landline: 021-34533033)',
+      officialSource: 'Lawyers for Human Rights and Legal Aid (LHRLA) / Madadgaar',
+      description: 'First national civil society helpline for women and children in Pakistan, offering immediate crisis support, shelter referrals, and legal counsel.'
+    },
+    {
+      id: 'pcsw_punjab_pk',
+      name: 'Punjab Women Helpline (1043)',
+      category: 'Immediate Crisis',
+      country: 'Pakistan',
+      phone: '1043',
+      text: null,
+      web: 'https://pcsw.punjab.gov.pk',
+      availability: 'Toll-Free 24/7 (Punjab Province)',
+      officialSource: 'Punjab Commission on the Status of Women (PCSW)',
+      description: 'Official 24/7 helpline for women dealing with domestic abuse, violence, or harassment; coordinates with local police and shelter homes (Dar-ul-Aman).'
+    },
+    {
+      id: 'rozan_pk',
+      name: 'Rozan Counselling & Emotional Support Helpline',
+      category: 'Counseling',
+      country: 'Pakistan',
+      phone: '0800-22444',
+      text: 'Mobile: 0304-111-1741',
+      web: 'https://rozan.org',
+      availability: 'Mon–Sat, 10:00 AM – 6:00 PM PKT',
+      officialSource: 'Rozan (Registered non-profit mental health NGO, Islamabad)',
+      description: 'Specialized trauma-informed psychological first aid and emotional counselling for women survivors of gender-based violence and distress.'
+    },
+
+    // --- INDIA RESOURCES ---
+    {
+      id: 'erss_in',
+      name: 'National Emergency Response Support System (ERSS)',
+      category: 'Immediate Crisis',
+      country: 'India',
+      phone: '112',
+      text: 'SMS: 112',
+      web: 'https://112.gov.in',
+      availability: 'Toll-Free 24/7 Pan-India',
+      officialSource: 'Ministry of Home Affairs, Government of India',
+      description: 'Single national emergency number across all Indian States and Union Territories for immediate police, fire, or emergency medical response.'
+    },
+    {
+      id: 'women_helpline_in',
+      name: 'Women Helpline (181)',
+      category: 'Immediate Crisis',
+      country: 'India',
+      phone: '181',
+      text: null,
+      web: 'https://wcd.nic.in',
+      availability: 'Toll-Free 24/7 Pan-India',
+      officialSource: 'Ministry of Women and Child Development (MWCD), Government of India',
+      description: 'Universal toll-free 24/7 emergency response and referral service for women affected by violence; directly linked to One Stop Centres (Sakhi) for medical, legal, and counseling aid.'
+    },
+    {
+      id: 'ncw_in',
+      name: 'National Commission for Women (NCW) 24/7 Helpline',
+      category: 'Legal Advocacy',
+      country: 'India',
+      phone: '7827170170',
+      text: null,
+      web: 'http://ncw.nic.in',
+      availability: '24/7 Dedicated Helpline',
+      officialSource: 'National Commission for Women, Government of India',
+      description: 'Round-the-clock helpline providing support, legal assistance, and rapid coordination for women facing domestic violence, sexual assault, and coercion.'
+    },
+    {
+      id: 'nimhans_in',
+      name: 'NIMHANS Psychosocial & Mental Health Helpline',
+      category: 'Counseling',
+      country: 'India',
+      phone: '080-46110007',
+      text: null,
+      web: 'https://nimhans.ac.in',
+      availability: 'Toll-Free 24/7',
+      officialSource: 'National Institute of Mental Health and Neuro Sciences (NIMHANS)',
+      description: 'National psychosocial helpline providing free, confidential trauma support, crisis counseling, and psychological first aid.'
+    },
+
+    // --- UNITED STATES & CANADA ---
+    {
+      id: 'rainn_us',
+      name: 'RAINN (National Sexual Assault Hotline)',
+      category: 'Immediate Crisis',
+      country: 'United States',
+      phone: '1-800-656-4673',
+      text: null,
+      web: 'https://www.rainn.org',
+      availability: '24/7, Free, Confidential',
+      officialSource: 'Rape, Abuse & Incest National Network (RAINN)',
+      description: 'The largest anti-sexual violence organization in the US. Connects survivors with local sexual assault service providers trained to support healing and medical forensic guidance.'
+    },
+    {
+      id: 'ndvh_us',
+      name: 'National Domestic Violence Hotline',
+      category: 'Immediate Crisis',
+      country: 'United States',
+      phone: '1-800-799-7233',
+      text: 'Text "START" to 88788',
+      web: 'https://www.thehotline.org',
+      availability: '24/7, Free, Confidential',
+      officialSource: 'National Domestic Violence Hotline',
+      description: 'Support for survivors experiencing domestic abuse, coercion, physical violence, or isolation. Can help create emergency shelter and safety plans.'
+    },
+    {
+      id: 'crisis_text_line',
+      name: 'Crisis Text Line',
+      category: 'Counseling',
+      country: 'US, UK, Canada',
+      phone: null,
+      text: 'Text "HOME" to 741741 (US/CA) or 85258 (UK)',
+      web: 'https://www.crisistextline.org',
+      availability: '24/7, Free, Confidential',
+      officialSource: 'Crisis Text Line Inc.',
+      description: 'Free, confidential 24/7 text support with trained crisis counselors for acute trauma, panic, anxiety, or emotional distress.'
+    },
+    {
+      id: 'lifeline_988',
+      name: '988 Suicide & Crisis Lifeline',
+      category: 'Immediate Crisis',
+      country: 'United States & Canada',
+      phone: '988',
+      text: 'Text 988',
+      web: 'https://988lifeline.org',
+      availability: '24/7, Free, Confidential',
+      officialSource: 'SAMHSA / Vibrant Emotional Health',
+      description: 'Immediate compassionate support for individuals experiencing overwhelming emotional pain, panic, or thoughts of self-harm.'
+    },
+    {
+      id: 'sarc_uk',
+      name: 'UK National Rape Crisis & SARC Directory',
+      category: 'Medical & Forensic',
+      country: 'United Kingdom',
+      phone: '0808 500 2222',
+      text: null,
+      web: 'https://rapecrisis.org.uk',
+      availability: '24/7 Free Support',
+      officialSource: 'Rape Crisis England & Wales / NHS SARC Network',
+      description: 'Specialist services for women and girls who have experienced rape or sexual abuse. Facilitates access to NHS Sexual Assault Referral Centres (SARCs).'
+    },
+    {
+      id: 'cwf_canada',
+      name: 'Canadian Women\'s Foundation & Shelter Network',
+      category: 'Shelter & Food Aid',
+      country: 'Canada',
+      phone: '1-866-863-0511',
+      text: null,
+      web: 'https://canadianwomen.org',
+      availability: '24/7 Emergency Support',
+      officialSource: 'Canadian Women\'s Foundation',
+      description: 'Connects survivors across Canada with safe emergency shelters, food security, trauma counseling, and legal support services.'
+    },
+    {
+      id: 'iasp_global',
+      name: 'Befrienders Worldwide & IASP Global Lifelines',
+      category: 'Immediate Crisis',
+      country: 'Global / International',
+      phone: null,
+      text: null,
+      web: 'https://www.befrienders.org',
+      availability: 'Directory of 400+ international centers',
+      officialSource: 'International Association for Suicide Prevention (IASP) / Befrienders',
+      description: 'Global database of free, verified crisis lines and emotional support centers across Europe, Asia, Africa, the Americas, and Oceania.'
+    }
+  ],
+
+  // Load Safety Plan
+  getPlan() {
+    return DB.getSafetyPlan();
+  },
+
+  // Save changes to Safety Plan
+  savePlan(plan) {
+    return DB.saveSafetyPlan(plan);
+  },
+
+  // Toggle go-bag checklist item
+  toggleChecklistItem(itemId, checked) {
+    const plan = this.getPlan();
+    const item = plan.goBagChecklist.find(i => i.id === itemId);
+    if (item) {
+      item.checked = checked;
+      this.savePlan(plan);
+    }
+    return plan;
+  },
+
+  // Add safe location
+  addSafeLocation(location) {
+    const plan = this.getPlan();
+    plan.safeLocations.push(location);
+    this.savePlan(plan);
+    return plan;
+  },
+
+  // Remove safe location
+  removeSafeLocation(index) {
+    const plan = this.getPlan();
+    if (index >= 0 && index < plan.safeLocations.length) {
+      plan.safeLocations.splice(index, 1);
+      this.savePlan(plan);
+    }
+    return plan;
+  }
+};
+
+
+/* === app.js === */
+/**
+ * SurvivorCare AI / SheCare AI - Main Application Coordinator & UI Engine
+ * Orchestrates navigation, discreet mode, quick exit, water tracking (max 12),
+ * camouflage notes, and event wiring.
+ */
+const App = {
+  activeView: 'view-mental-health',
+  isDiscreetMode: false,
+
+  async init() {
+    // 1. Initialize Auth
+    await Auth.init();
+
+    // 2. Setup Navigation
+    this.setupNavigation();
+
+    // 3. Setup Quick Exit & Camouflage Notes
+    this.setupQuickExit();
+
+    // 4. Setup Discreet Mode Toggle
+    this.setupDiscreetMode();
+
+    // 5. Initialize Sub-modules
+    this.initMentalHealth();
+    this.initPhysicalHealth();
+    this.initPeriodTracker();
+    this.initPregnancySTI();
+    this.initSOS();
+    this.initSafetyPlan();
+    this.initAuthAndSessions();
+
+    // 6. Check if user is logged in
+    this.updateUserInterface();
+
+    console.log('SheCare AI initialized successfully in Offline-First Mode.');
+  },
+
+  // View Navigation
+  setupNavigation() {
+    const navItems = document.querySelectorAll('.nav-item[data-view]');
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetView = item.getAttribute('data-view');
+        this.switchView(targetView);
+      });
+    });
+  },
+
+  switchView(viewId) {
+    this.activeView = viewId;
+    
+    // Update nav active classes
+    document.querySelectorAll('.nav-item[data-view]').forEach(item => {
+      if (item.getAttribute('data-view') === viewId) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+
+    // Update section visibility
+    document.querySelectorAll('.view-section').forEach(section => {
+      if (section.id === viewId) {
+        section.classList.add('active');
+      } else {
+        section.classList.remove('active');
+      }
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },
+
+  // Quick Exit and Camouflage Notes Engine
+  setupQuickExit() {
+    const exitButtons = document.querySelectorAll('.quick-exit-btn, #btnCamouflageExit');
+    exitButtons.forEach(btn => {
+      btn.addEventListener('click', () => this.triggerQuickExit());
+    });
+
+    // Global ESC key shortcut for emergency exit
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.triggerQuickExit();
+      }
+    });
+
+    // Camouflage Return Button - Requires intentional confirmation action
+    const promptResumeBtn = document.getElementById('btnPromptResume');
+    if (promptResumeBtn) {
+      promptResumeBtn.addEventListener('click', () => {
+        this.openModal('modalResumeConfirm');
+      });
+    }
+
+    const confirmResumeBtn = document.getElementById('btnConfirmResumeSession');
+    if (confirmResumeBtn) {
+      confirmResumeBtn.addEventListener('click', () => {
+        this.closeModal('modalResumeConfirm');
+        const camo = document.getElementById('camouflageScreen');
+        if (camo) camo.classList.remove('active');
+        document.title = this.isDiscreetMode ? 'Daily Notes & Planner' : 'SheCare AI - Secure Offline Support';
+        this.showToast('Session resumed. You are in safe view.');
+      });
+    }
+
+    // Quick Exit Limitations Modal trigger
+    const limitationBtn = document.getElementById('btnPrivacyNotice');
+    if (limitationBtn) {
+      limitationBtn.addEventListener('click', () => {
+        this.openModal('modalQuickExitNotice');
+      });
+    }
+
+    // Camouflage scratchpad auto-save
+    const scratchpad = document.getElementById('camoScratchpad');
+    if (scratchpad) {
+      const savedNotes = DB.getCamouflageNotes();
+      if (savedNotes && savedNotes.scratchpad) {
+        scratchpad.value = savedNotes.scratchpad;
+      }
+      scratchpad.addEventListener('input', (e) => {
+        const cur = DB.getCamouflageNotes();
+        cur.scratchpad = e.target.value;
+        DB.saveCamouflageNotes(cur);
+      });
+    }
+  },
+
+  triggerQuickExit() {
+    // 1. Instantly display neutral notes & planner camouflage screen
+    const camo = document.getElementById('camouflageScreen');
+    if (camo) {
+      camo.classList.add('active');
+    }
+
+    // 2. Disguise tab title consistently to neutral daily notes
+    document.title = 'Personal Daily Notes & Task Planner';
+
+    // 3. Clear transient sensitive input fields currently in focus without wiping database
+    const activeInputs = document.querySelectorAll('input:not([type="submit"]):not([type="button"]):not([type="checkbox"]), textarea:not(#camoScratchpad)');
+    activeInputs.forEach(i => {
+      if (!i.hasAttribute('data-preserve')) {
+        i.value = '';
+      }
+    });
+
+    // 4. Stop audio siren immediately if active
+    SOS.stopSiren();
+  },
+
+  // Discreet Mode (Camouflage styling & neutralized labels)
+  setupDiscreetMode() {
+    const toggle = document.getElementById('discreetModeToggle');
+    if (toggle) {
+      toggle.addEventListener('change', (e) => {
+        this.setDiscreetMode(e.target.checked);
+      });
+    }
+  },
+
+  setDiscreetMode(enabled) {
+    this.isDiscreetMode = enabled;
+    if (enabled) {
+      document.body.classList.add('discreet-mode');
+      document.title = 'Daily Notes & Planner';
+      document.getElementById('brandName').textContent = 'Daily Notes';
+      document.getElementById('brandBadge').textContent = 'Offline Planner';
+      
+      // Neutralize nav item text
+      document.getElementById('navLabelMental').textContent = 'Mind & Wellness';
+      document.getElementById('navLabelPhysical').textContent = 'Daily Body & Hydration';
+      document.getElementById('navLabelCycle').textContent = 'Calendar & Log';
+      document.getElementById('navLabelPregnancy').textContent = 'Health Reference';
+      document.getElementById('navLabelSos').textContent = 'Quick Contacts';
+      document.getElementById('navLabelSafety').textContent = 'Personal Safety Notes';
+    } else {
+      document.body.classList.remove('discreet-mode');
+      document.title = 'SheCare AI - Secure Offline Support';
+      document.getElementById('brandName').textContent = 'SheCare AI';
+      document.getElementById('brandBadge').textContent = 'SurvivorCare • Offline First';
+
+      // Restore healthcare text
+      document.getElementById('navLabelMental').textContent = 'Mental Health Support';
+      document.getElementById('navLabelPhysical').textContent = 'Physical Health & Sustenance';
+      document.getElementById('navLabelCycle').textContent = 'Cycle & Period Tracker';
+      document.getElementById('navLabelPregnancy').textContent = 'Pregnancy & HIV/STI';
+      document.getElementById('navLabelSos').textContent = 'SOS Emergency Alert';
+      document.getElementById('navLabelSafety').textContent = 'Safety Plan & Directory';
+    }
+  },
+
+  // Toast Notification System
+  showToast(message, type = 'info') {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toastContainer';
+      container.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:8px;';
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `alert-box alert-${type}`;
+    toast.style.cssText = 'margin:0;padding:10px 16px;box-shadow:0 4px 12px rgba(0,0,0,0.15);border-radius:8px;max-width:340px;';
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s ease';
+      setTimeout(() => toast.remove(), 300);
+    }, 3500);
+  },
+
+  // Modal helpers
+  openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.add('active');
+  },
+
+  closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.remove('active');
+  },
+
+  showLockScreen() {
+    this.openModal('modalLockScreen');
+  },
+
+  // Update User Profile UI
+  updateUserInterface() {
+    const userLabel = document.getElementById('currentUsernameDisplay');
+    const authStatus = document.getElementById('authStatusBadge');
+    if (Auth.currentUser) {
+      if (userLabel) userLabel.textContent = Auth.currentUser.username;
+      if (authStatus) {
+        authStatus.textContent = 'Protected Session';
+        authStatus.className = 'badge badge-success';
+      }
+    } else {
+      if (userLabel) userLabel.textContent = 'Anonymous Guest';
+      if (authStatus) {
+        authStatus.textContent = 'Guest / Offline Storage';
+        authStatus.className = 'badge badge-warning';
+      }
+    }
+    this.renderActiveSessions();
+  },
+
+  // -------------------------------------------------------------
+  // MODULE INITIALIZERS
+  // -------------------------------------------------------------
+
+  // Mental Health Module
+  initMentalHealth() {
+    // 1. Box Breathing UI
+    const circle = document.getElementById('breathingCircle');
+    const phaseLabel = document.getElementById('breathingPhaseLabel');
+    const timerLabel = document.getElementById('breathingTimerLabel');
+    const cycleLabel = document.getElementById('breathingCyclesCount');
+    const btnStart = document.getElementById('btnStartBreathing');
+    const btnStop = document.getElementById('btnStopBreathing');
+
+    if (btnStart && btnStop) {
+      btnStart.addEventListener('click', () => {
+        btnStart.style.display = 'none';
+        btnStop.style.display = 'inline-flex';
+        MentalHealth.startBreathing(state => {
+          phaseLabel.textContent = state.phaseName;
+          timerLabel.textContent = state.secondsLeft;
+          cycleLabel.textContent = `Completed cycles: ${state.cycles}`;
+          circle.className = `breathing-circle ${state.phaseClass}`;
+        });
+      });
+
+      btnStop.addEventListener('click', () => {
+        MentalHealth.stopBreathing();
+        btnStop.style.display = 'none';
+        btnStart.style.display = 'inline-flex';
+        phaseLabel.textContent = 'Ready to Begin';
+        timerLabel.textContent = '4';
+        circle.className = 'breathing-circle';
+      });
+    }
+
+    // 2. Affirmations UI
+    const affText = document.getElementById('affirmationText');
+    const btnAffNext = document.getElementById('btnNextAffirmation');
+    if (affText && btnAffNext) {
+      affText.textContent = MentalHealth.getRandomAffirmation();
+      btnAffNext.addEventListener('click', () => {
+        affText.textContent = MentalHealth.getRandomAffirmation();
+      });
+    }
+
+    // 3. 5-4-3-2-1 Grounding UI
+    const groundInputs = document.querySelectorAll('.grounding-input');
+    const groundProgress = document.getElementById('groundingProgress');
+    const groundFinished = document.getElementById('groundingCompletionCard');
+
+    groundInputs.forEach(input => {
+      input.addEventListener('input', () => {
+        let filledCount = 0;
+        groundInputs.forEach(i => { if (i.value.trim().length > 0) filledCount++; });
+        if (groundProgress) {
+          groundProgress.textContent = `${filledCount} of ${groundInputs.length} senses anchored`;
+        }
+        if (filledCount === groundInputs.length && groundFinished) {
+          groundFinished.style.display = 'block';
+        }
+      });
+    });
+
+    const btnResetGround = document.getElementById('btnResetGrounding');
+    if (btnResetGround) {
+      btnResetGround.addEventListener('click', () => {
+        groundInputs.forEach(i => { i.value = ''; });
+        if (groundProgress) groundProgress.textContent = '0 of 15 senses anchored';
+        if (groundFinished) groundFinished.style.display = 'none';
+      });
+    }
+
+    // 4. Trauma-Informed Supportive Chat (Rule-Based Offline Companion)
+    const chatInput = document.getElementById('chatInput');
+    const chatBtn = document.getElementById('btnSendChat');
+    const chatBox = document.getElementById('chatMessages');
+
+    const appendMsg = (sender, text) => {
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+      bubble.textContent = text;
+      chatBox.appendChild(bubble);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    };
+
+    const handleSend = () => {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      appendMsg('user', text);
+      chatInput.value = '';
+
+      setTimeout(() => {
+        const reply = MentalHealth.getBotResponse(text);
+        appendMsg('bot', reply);
+      }, 400);
+    };
+
+    if (chatBtn && chatInput) {
+      chatBtn.addEventListener('click', handleSend);
+      chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleSend();
+      });
+    }
+
+    // Quick chip buttons
+    document.querySelectorAll('.chat-action-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        chatInput.value = chip.textContent;
+        handleSend();
+      });
+    });
+  },
+
+  // Physical Health & Sustenance Module (With Strict 12 Glass Water Limit)
+  initPhysicalHealth() {
+    const painSlider = document.getElementById('inputPainLevel');
+    const painDisplay = document.getElementById('painLevelDisplay');
+    if (painSlider && painDisplay) {
+      painSlider.addEventListener('input', (e) => {
+        painDisplay.textContent = `${e.target.value} / 10`;
+      });
+    }
+
+    const form = document.getElementById('formLogSymptom');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const data = {
+          painLevel: document.getElementById('inputPainLevel').value,
+          painArea: document.getElementById('inputPainArea').value,
+          bleeding: document.getElementById('inputBleeding').value,
+          fever: document.getElementById('inputFever').value,
+          dizziness: document.getElementById('inputDizziness').checked,
+          bruising: document.getElementById('inputBruising').value,
+          notes: document.getElementById('inputSymptomNotes').value
+        };
+
+        const result = PhysicalHealth.logSymptom(data);
+        this.renderSymptomLogs();
+        this.renderRedFlagAlerts(result.redFlags);
+        form.reset();
+        if (painSlider && painDisplay) painDisplay.textContent = '0 / 10';
+        this.showToast('Health record saved locally on device.', 'success');
+      });
+    }
+
+    // Sustenance & Water tracker buttons
+    const btnAddWater = document.getElementById('btnAddWater');
+    const btnSubWater = document.getElementById('btnSubWater');
+    const waterCountDisplay = document.getElementById('waterGlassCount');
+    const waterTipDisplay = document.getElementById('waterGuidanceTip');
+    const waterLimitAlert = document.getElementById('waterLimitAlert');
+    const deniedBox = document.getElementById('checkboxDeniedSustenance');
+
+    const updateSustenanceUI = (todayLog) => {
+      const glasses = Number(todayLog.waterGlasses) || 0;
+      if (waterCountDisplay) waterCountDisplay.textContent = glasses;
+      
+      const guidance = PhysicalHealth.getHydrationGuidance(glasses);
+      if (waterTipDisplay) {
+        waterTipDisplay.innerHTML = `<span class=\"badge ${guidance.class}\">${guidance.status}</span> ${guidance.tip}`;
+      }
+
+      // Handle Strict 12-Glass Limit State
+      if (glasses >= 12) {
+        if (btnAddWater) btnAddWater.disabled = true;
+        if (waterLimitAlert) waterLimitAlert.style.display = 'block';
+      } else {
+        if (btnAddWater) btnAddWater.disabled = false;
+        if (waterLimitAlert) waterLimitAlert.style.display = 'none';
+      }
+
+      if (btnSubWater) {
+        btnSubWater.disabled = (glasses <= 0);
+      }
+
+      if (deniedBox) deniedBox.checked = Boolean(todayLog.deniedFoodOrWater);
+    };
+
+    const initialToday = DB.getSustenanceForDate();
+    if (initialToday) updateSustenanceUI(initialToday);
+
+    if (btnAddWater) {
+      btnAddWater.addEventListener('click', () => {
+        const curCount = Number(DB.getSustenanceForDate().waterGlasses) || 0;
+        if (curCount >= 12) {
+          if (waterLimitAlert) waterLimitAlert.style.display = 'block';
+          this.showToast('You have reached the daily tracking limit of 12 glasses.', 'calm');
+          return;
+        }
+
+        const res = DB.addWaterGlass(null, 12);
+        updateSustenanceUI(res);
+        if (res.reachedLimit) {
+          this.showToast('You have reached the daily tracking limit of 12 glasses.', 'calm');
+        }
+      });
+    }
+
+    if (btnSubWater) {
+      btnSubWater.addEventListener('click', () => {
+        const res = DB.removeWaterGlass(null);
+        updateSustenanceUI(res);
+      });
+    }
+
+    if (deniedBox) {
+      deniedBox.addEventListener('change', (e) => {
+        DB.updateTodaySustenance(item => {
+          item.deniedFoodOrWater = e.target.checked;
+          return item;
+        });
+        if (e.target.checked) {
+          this.openModal('modalIsolationHelp');
+        }
+      });
+    }
+
+    this.renderSymptomLogs();
+  },
+
+  renderRedFlagAlerts(flags) {
+    const container = document.getElementById('activeRedFlagsBox');
+    if (!container) return;
+
+    if (!flags || flags.length === 0) {
+      container.style.display = 'none';
+      container.innerHTML = '';
+      return;
+    }
+
+    container.style.display = 'block';
+    container.innerHTML = `
+      <div class=\"alert-box alert-danger\">
+        <div>
+          <strong style=\"display:block;margin-bottom:6px;\">🚨 Urgent Medical Notice:</strong>
+          <ul style=\"margin-left:20px;\">
+            ${flags.map(f => `<li><strong>${f.title}:</strong> ${f.message}</li>`).join('')}
+          </ul>
+          <p style=\"margin-top:8px;font-size:0.85rem;\">SheCare AI is not a diagnostic tool. Please consider seeking emergency clinical assessment or visiting the nearest hospital emergency department.</p>
+        </div>
+      </div>
+    `;
+  },
+
+  renderSymptomLogs() {
+    const container = document.getElementById('symptomLogsList');
+    if (!container) return;
+
+    const logs = DB.getSymptoms();
+    if (logs.length === 0) {
+      container.innerHTML = '<p style=\"color:var(--text-muted);font-size:0.9rem;\">No symptoms recorded yet. Entries remain safely on this device only.</p>';
+      return;
+    }
+
+    container.innerHTML = logs.map(log => `
+      <div class=\"card\" style=\"padding:16px;margin-bottom:12px;\">
+        <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
+          <span style=\"font-weight:700;font-size:0.95rem;\">${new Date(log.timestamp).toLocaleDateString()} ${new Date(log.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+          <button class=\"btn btn-sm btn-secondary\" onclick=\"App.deleteSymptomEntry('${log.id}')\">Delete</button>
+        </div>
+        <div style=\"display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;\">
+          <span class=\"badge ${log.painLevel >= 7 ? 'badge-danger' : 'badge-primary'}\">Pain: ${log.painLevel}/10 (${log.painArea})</span>
+          <span class=\"badge badge-warning\">Bleeding: ${log.bleeding}</span>
+          <span class=\"badge badge-neutral\">Fever: ${log.fever}</span>
+          ${log.dizziness ? '<span class=\"badge badge-danger\">Dizziness / Nausea</span>' : ''}
+        </div>
+        ${log.bruising ? `<div style=\"font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;\"><strong>Marks/Bruising:</strong> ${log.bruising}</div>` : ''}
+        ${log.notes ? `<p style=\"font-size:0.88rem;color:var(--text-muted);background:var(--bg-subtle);padding:8px 12px;border-radius:6px;\">${log.notes}</p>` : ''}
+      </div>
+    `).join('');
+  },
+
+  deleteSymptomEntry(id) {
+    if (confirm('Delete this symptom record from this device?')) {
+      DB.deleteSymptom(id);
+      this.renderSymptomLogs();
+      this.showToast('Record deleted.');
+    }
+  },
+
+  // Menstrual / Cycle Tracker Module
+  initPeriodTracker() {
+    const form = document.getElementById('formLogPeriod');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        try {
+          const entry = {
+            startDate: document.getElementById('inputCycleStartDate').value,
+            flow: document.getElementById('inputCycleFlow').value,
+            notes: document.getElementById('inputCycleNotes').value
+          };
+          PeriodTracker.logPeriod(entry);
+          this.renderPeriodStats();
+          this.renderPeriodHistory();
+          form.reset();
+          this.showToast('Cycle log recorded.', 'success');
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+    }
+
+    this.renderPeriodStats();
+    this.renderPeriodHistory();
+  },
+
+  renderPeriodStats() {
+    const stats = PeriodTracker.calculateStats();
+    const nextDateDisplay = document.getElementById('estimatedNextPeriodText');
+    const fertileDisplay = document.getElementById('estimatedFertileWindowText');
+    const avgLengthDisplay = document.getElementById('avgCycleDaysText');
+
+    if (!stats.hasData) {
+      if (nextDateDisplay) nextDateDisplay.textContent = 'Need at least 1 cycle log to calculate estimate.';
+      if (fertileDisplay) fertileDisplay.textContent = 'Estimated window will show after cycle is logged.';
+      if (avgLengthDisplay) avgLengthDisplay.textContent = 'Baseline 28 days';
+      return;
+    }
+
+    if (nextDateDisplay) nextDateDisplay.textContent = `${stats.estimatedNextPeriod} (Statistical Estimate)`;
+    if (fertileDisplay) fertileDisplay.textContent = `${stats.estimatedFertileStart} to ${stats.estimatedFertileEnd} (Approximate)`;
+    if (avgLengthDisplay) avgLengthDisplay.textContent = `${stats.averageCycleDays} days`;
+  },
+
+  renderPeriodHistory() {
+    const container = document.getElementById('cycleHistoryList');
+    if (!container) return;
+
+    const logs = DB.getCycleLogs();
+    if (logs.length === 0) {
+      container.innerHTML = '<p style=\"color:var(--text-muted);font-size:0.9rem;\">No previous cycles recorded.</p>';
+      return;
+    }
+
+    container.innerHTML = logs.map(log => `
+      <div style=\"display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);\">
+        <div>
+          <strong>Start Date: ${log.startDate}</strong>
+          <div style=\"font-size:0.85rem;color:var(--text-muted);\">Flow: ${log.flow} ${log.notes ? '• ' + log.notes : ''}</div>
+        </div>
+        <span class=\"badge badge-primary\">Logged</span>
+      </div>
+    `).join('');
+  },
+
+  // Pregnancy & HIV/STI Module
+  initPregnancySTI() {
+    // 1. HIV PEP Calculator
+    const btnCalcPep = document.getElementById('btnCalculatePep');
+    const pepInput = document.getElementById('inputPepExposureDate');
+    const pepResult = document.getElementById('pepCalculationResult');
+
+    if (btnCalcPep && pepInput && pepResult) {
+      btnCalcPep.addEventListener('click', () => {
+        const val = pepInput.value;
+        if (!val) {
+          alert('Please select the approximate date and time of potential exposure.');
+          return;
+        }
+
+        const res = PregnancySTI.calculatePepStatus(val);
+        if (res.status === 'invalid') {
+          pepResult.innerHTML = `<div class=\"alert-box alert-warning\">${res.message}</div>`;
+          return;
+        }
+
+        pepResult.innerHTML = `
+          <div class=\"alert-box alert-${res.severity === 'critical' ? 'danger' : (res.severity === 'urgent' ? 'warning' : 'neutral')}\">
+            <div>
+              <div style=\"font-size:1.1rem;font-weight:700;margin-bottom:6px;\">
+                ${res.status === 'active' ? `⏳ Window Remaining: ${res.countdownText}` : '⚠️ PEP Window Has Passed'}
+              </div>
+              <p>${res.guidance}</p>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 2. Pregnancy Test Calculator
+    const btnCalcPreg = document.getElementById('btnCalculatePregTest');
+    const incidentDateInput = document.getElementById('inputPregIncidentDate');
+    const pregResult = document.getElementById('pregnancyTestResult');
+
+    if (btnCalcPreg && incidentDateInput && pregResult) {
+      btnCalcPreg.addEventListener('click', () => {
+        const dateVal = incidentDateInput.value;
+        if (!dateVal) {
+          alert('Please select the incident date.');
+          return;
+        }
+
+        const res = PregnancySTI.calculatePregnancyTestDates(dateVal);
+        pregResult.innerHTML = `
+          <div class=\"card\" style=\"background:var(--bg-subtle);margin-top:16px;\">
+            <h4 style=\"margin-bottom:10px;\">Testing & Emergency Contraception Timelines:</h4>
+            <div style=\"margin-bottom:8px;\">
+              <strong>Emergency Contraception (EC):</strong>
+              <div>• Plan B (Levonorgestrel): ${res.planBEligible ? '<span class=\"badge badge-success\">Eligible (within 72h)</span>' : '<span class=\"badge badge-danger\">Window expired (>72h)</span>'}</div>
+              <div>• Ella (Ulipristal Acetate): ${res.ellaEligible ? '<span class=\"badge badge-success\">Eligible (within 120h)</span>' : '<span class=\"badge badge-danger\">Window expired (>120h)</span>'}</div>
+              <div>• Copper IUD insertion: ${res.iudEligible ? '<span class=\"badge badge-success\">Eligible (within 5 days)</span>' : '<span class=\"badge badge-danger\">Window expired (>5 days)</span>'}</div>
+            </div>
+            <div style=\"margin-top:12px;border-top:1px solid var(--border);padding-top:10px;\">
+              <strong>Home Pregnancy Urine Test Dates:</strong>
+              <div>• Earliest Detection Date: <strong>${res.earliestTestDate}</strong> (14 days post-incident)</div>
+              <div>• High Accuracy Date: <strong>${res.accurateTestDate}</strong> (21 days post-incident)</div>
+              <p style=\"font-size:0.8rem;color:var(--text-muted);margin-top:6px;\">Note: Testing earlier than 14 days often produces false negative results because hCG hormone levels require time to rise.</p>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 3. STI Educational Library Render
+    const stiContainer = document.getElementById('stiKnowledgeCards');
+    if (stiContainer) {
+      stiContainer.innerHTML = PregnancySTI.stiData.map(item => `
+        <div class=\"card\" style=\"padding:18px;\">
+          <h4 style=\"color:var(--primary);margin-bottom:8px;\">${item.name}</h4>
+          <p style=\"font-size:0.85rem;margin-bottom:6px;\"><strong>Transmission:</strong> ${item.transmission}</p>
+          <p style=\"font-size:0.85rem;margin-bottom:6px;\"><strong>Emergency Prophylaxis:</strong> ${item.prophylaxis}</p>
+          <p style=\"font-size:0.85rem;margin-bottom:6px;\"><strong>Testing Timeline:</strong> ${item.testingTimeline}</p>
+          <p style=\"font-size:0.82rem;color:var(--text-muted);background:var(--bg-subtle);padding:8px;border-radius:6px;\">${item.notes}</p>
+        </div>
+      `).join('');
+    }
+  },
+
+  // SOS Emergency Module (With Input Validation, Location Consent & Precautionary Siren)
+  initSOS() {
+    // 1. Contact Form
+    const formContact = document.getElementById('formSosContact');
+    if (formContact) {
+      const existing = DB.getSosContacts()[0] || {};
+      if (existing.name) document.getElementById('inputSosName').value = existing.name;
+      if (existing.phone) document.getElementById('inputSosPhone').value = existing.phone;
+      if (existing.email) document.getElementById('inputSosEmail').value = existing.email;
+      if (existing.customMessage) document.getElementById('inputSosCustomMsg').value = existing.customMessage;
+
+      formContact.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const contact = {
+          name: document.getElementById('inputSosName').value.trim(),
+          phone: document.getElementById('inputSosPhone').value.trim(),
+          email: document.getElementById('inputSosEmail').value.trim(),
+          customMessage: document.getElementById('inputSosCustomMsg').value.trim(),
+          isPrimary: true
+        };
+        const validation = SOS.validateContact(contact);
+        if (!validation.valid) {
+          alert(validation.error);
+          return;
+        }
+        DB.saveSosContacts([contact]);
+        this.showToast('Trusted contact details saved securely on device.', 'success');
+      });
+    }
+
+    // Helper for location consent
+    const getLocationIfConsented = () => {
+      const consentBox = document.getElementById('checkboxConsentLocation');
+      const hasConsent = consentBox ? consentBox.checked : false;
+      return new Promise((resolve) => {
+        if (!hasConsent || !navigator.geolocation) {
+          resolve(null);
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          pos => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
+          () => resolve(null),
+          { timeout: 5000, maximumAge: 60000 }
+        );
+      });
+    };
+
+    // 2. Native SMS Trigger
+    const btnSendSms = document.getElementById('btnDispatchSms');
+    if (btnSendSms) {
+      btnSendSms.addEventListener('click', async () => {
+        const contact = DB.getSosContacts()[0];
+        const validation = SOS.validateContact(contact);
+        if (!validation.valid) {
+          alert('Please configure a valid trusted contact phone number first.');
+          return;
+        }
+        const consentBox = document.getElementById('checkboxConsentLocation');
+        const hasConsent = consentBox ? consentBox.checked : false;
+        const coords = await getLocationIfConsented();
+
+        const msg = SOS.generateDistressMessage(contact.name, contact.customMessage, hasConsent, coords);
+        SOS.dispatchViaDeviceSms(contact.phone, msg);
+        this.renderSosLogs();
+      });
+    }
+
+    // 3. Native Phone Call Trigger
+    const btnCallContact = document.getElementById('btnDispatchCall');
+    if (btnCallContact) {
+      btnCallContact.addEventListener('click', () => {
+        const contact = DB.getSosContacts()[0];
+        const validation = SOS.validateContact(contact);
+        if (!validation.valid) {
+          alert('Please configure a valid trusted contact phone number first.');
+          return;
+        }
+        SOS.dispatchViaPhoneCall(contact.phone);
+        this.renderSosLogs();
+      });
+    }
+
+    // 4. Server Gateway Trigger (Truthful network test)
+    const btnSendServer = document.getElementById('btnDispatchServer');
+    if (btnSendServer) {
+      btnSendServer.addEventListener('click', async () => {
+        const contact = DB.getSosContacts()[0];
+        const validation = SOS.validateContact(contact);
+        if (!validation.valid) {
+          alert('Please configure a valid trusted contact phone number first.');
+          return;
+        }
+        btnSendServer.disabled = true;
+        btnSendServer.textContent = 'Transmitting...';
+        const consentBox = document.getElementById('checkboxConsentLocation');
+        const hasConsent = consentBox ? consentBox.checked : false;
+        const coords = await getLocationIfConsented();
+
+        const msg = SOS.generateDistressMessage(contact.name, contact.customMessage, hasConsent, coords);
+        const res = await SOS.dispatchViaServer(contact.phone, msg);
+        btnSendServer.disabled = false;
+        btnSendServer.textContent = 'Send Alert via Server Gateway';
+        this.renderSosLogs();
+        this.showToast(res.statusText, res.status.includes('FAILED') ? 'danger' : 'success');
+      });
+    }
+
+    // 5. Audio Siren Simulator (With Danger Warning)
+    const btnStartSiren = document.getElementById('btnStartSiren');
+    const btnStopSiren = document.getElementById('btnStopSiren');
+    const sirenBanner = document.getElementById('sirenBanner');
+
+    if (btnStartSiren && btnStopSiren) {
+      btnStartSiren.addEventListener('click', () => {
+        SOS.startSiren();
+        btnStartSiren.style.display = 'none';
+        btnStopSiren.style.display = 'inline-flex';
+        if (sirenBanner) sirenBanner.style.display = 'block';
+      });
+
+      btnStopSiren.addEventListener('click', () => {
+        SOS.stopSiren();
+        btnStopSiren.style.display = 'none';
+        btnStartSiren.style.display = 'inline-flex';
+        if (sirenBanner) sirenBanner.style.display = 'none';
+      });
+    }
+
+    this.renderSosLogs();
+  },
+
+  renderSosLogs() {
+    const container = document.getElementById('sosDispatchLogsList');
+    if (!container) return;
+
+    const logs = DB.getSosLogs();
+    if (logs.length === 0) {
+      container.innerHTML = '<p style=\"color:var(--text-muted);font-size:0.88rem;\">No dispatch attempts recorded.</p>';
+      return;
+    }
+
+    container.innerHTML = logs.map(l => `
+      <div style=\"padding:10px 0;border-bottom:1px solid var(--border);\">
+        <div style=\"display:flex;justify-content:space-between;align-items:center;\">
+          <strong>${l.channel} &rarr; ${l.contactPhone}</strong>
+          <span class=\"badge ${l.status.includes('FAILED') ? 'badge-danger' : (l.status.includes('PENDING') ? 'badge-warning' : 'badge-success')}\">${l.status}</span>
+        </div>
+        <p style=\"font-size:0.85rem;color:var(--text-muted);margin-top:4px;\">${l.statusText}</p>
+        <div style=\"font-size:0.75rem;color:var(--text-subtle);\">Timestamp: ${new Date(l.timestamp).toLocaleTimeString()} • ${l.truthfulNote}</div>
+      </div>
+    `).join('');
+  },
+
+  // Safety Plan & Verified Directory Module
+  initSafetyPlan() {
+    // 1. Checklist render
+    const plan = SafetyPlan.getPlan();
+    const checklistContainer = document.getElementById('goBagChecklistContainer');
+    if (checklistContainer) {
+      checklistContainer.innerHTML = plan.goBagChecklist.map(item => `
+        <label style=\"display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;\">
+          <input type=\"checkbox\" id=\"check_${item.id}\" ${item.checked ? 'checked' : ''} onchange=\"App.onToggleGoBag('${item.id}', this.checked)\" style=\"width:18px;height:18px;\">
+          <span style=\"font-size:0.92rem;${item.checked ? 'text-decoration:line-through;color:var(--text-muted);' : ''}\">${item.label}</span>
+        </label>
+      `).join('');
+    }
+
+    // 2. Safe Code Word & Isolation Steps Form
+    const codeWordInput = document.getElementById('inputSafeCodeWord');
+    const isolationInput = document.getElementById('inputIsolationSteps');
+    const btnSaveSafetyDetails = document.getElementById('btnSaveSafetyDetails');
+
+    if (codeWordInput && plan.safeCodeWord) codeWordInput.value = plan.safeCodeWord;
+    if (isolationInput && plan.isolationSteps) isolationInput.value = plan.isolationSteps;
+
+    if (btnSaveSafetyDetails) {
+      btnSaveSafetyDetails.addEventListener('click', () => {
+        const curPlan = SafetyPlan.getPlan();
+        curPlan.safeCodeWord = codeWordInput.value.trim();
+        curPlan.isolationSteps = isolationInput.value.trim();
+        SafetyPlan.savePlan(curPlan);
+        this.showToast('Safety details saved securely on device.', 'success');
+      });
+    }
+
+    // 3. Verified Directory Filter (Country & Category)
+    const filterSelect = document.getElementById('selectDirectoryFilter');
+    const countrySelect = document.getElementById('selectCountryFilter');
+    
+    const applyFilters = () => {
+      const cat = filterSelect ? filterSelect.value : 'All';
+      const cty = countrySelect ? countrySelect.value : 'All';
+      this.renderSupportDirectory(cat, cty);
+    };
+
+    if (filterSelect) filterSelect.addEventListener('change', applyFilters);
+    if (countrySelect) countrySelect.addEventListener('change', applyFilters);
+
+    this.renderSupportDirectory('All', 'All');
+  },
+
+  onToggleGoBag(itemId, checked) {
+    SafetyPlan.toggleChecklistItem(itemId, checked);
+    this.initSafetyPlan();
+  },
+
+  renderSupportDirectory(categoryFilter = 'All', countryFilter = 'All') {
+    const container = document.getElementById('verifiedDirectoryContainer');
+    if (!container) return;
+
+    let items = SafetyPlan.verifiedDirectory;
+    if (categoryFilter !== 'All') {
+      items = items.filter(i => i.category === categoryFilter);
+    }
+    if (countryFilter !== 'All') {
+      items = items.filter(i => i.country === countryFilter || (countryFilter === 'Global' && i.country.includes('Global')));
+    }
+
+    if (items.length === 0) {
+      container.innerHTML = '<p style=\"color:var(--text-muted);font-size:0.9rem;padding:12px;\">No directory resources match the selected filters.</p>';
+      return;
+    }
+
+    container.innerHTML = items.map(item => `
+      <div class=\"card\" style=\"padding:20px;\">
+        <div style=\"display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;\">
+          <div>
+            <h4 style=\"font-size:1.1rem;font-weight:700;\">${item.name}</h4>
+            <span class=\"badge badge-primary\" style=\"margin-top:4px;\">${item.category} • ${item.country}</span>
+          </div>
+          <span class=\"badge badge-success\">${item.availability}</span>
+        </div>
+        <p style=\"font-size:0.88rem;color:var(--text-muted);margin:10px 0;\">${item.description}</p>
+        ${item.officialSource ? `<div style=\"font-size:0.75rem;color:var(--text-subtle);margin-bottom:10px;\"><strong>Source:</strong> ${item.officialSource}</div>` : ''}
+        <div style=\"display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;\">
+          ${item.phone ? `<a href=\"tel:${item.phone.replace(/[^0-9+]/g, '')}\" class=\"btn btn-sm btn-primary\">Call ${item.phone}</a>` : ''}
+          ${item.web ? `<a href=\"${item.web}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"btn btn-sm btn-secondary\">Visit Official Website</a>` : ''}
+          ${item.text ? `<span class=\"badge badge-neutral\" style=\"align-self:center;\">${item.text}</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+  },
+
+  // Auth, Active Sessions & Privacy Module
+  initAuthAndSessions() {
+    // Password Strength Meter listener
+    const regPasswordInput = document.getElementById('inputRegPassword');
+    const strengthFill = document.getElementById('pwdStrengthFill');
+    const strengthLabel = document.getElementById('pwdStrengthLabel');
+    const strengthFeedback = document.getElementById('pwdStrengthFeedback');
+
+    if (regPasswordInput && strengthFill && strengthLabel) {
+      regPasswordInput.addEventListener('input', (e) => {
+        const strength = Auth.evaluatePasswordStrength(e.target.value);
+        strengthFill.className = `password-strength-fill ${strength.class}`;
+        strengthLabel.textContent = `Strength: ${strength.label}`;
+        if (strengthFeedback) strengthFeedback.textContent = strength.feedback;
+      });
+    }
+
+    // Register Form
+    const formReg = document.getElementById('formRegister');
+    if (formReg) {
+      formReg.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const user = document.getElementById('inputRegUsername').value;
+          const pass = document.getElementById('inputRegPassword').value;
+          const hint = document.getElementById('inputRegHint').value;
+          await Auth.register(user, pass, hint);
+          this.updateUserInterface();
+          formReg.reset();
+          this.showToast('Profile created with PBKDF2 encryption!', 'success');
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+    }
+
+    // Login Form
+    const formLogin = document.getElementById('formLogin');
+    if (formLogin) {
+      formLogin.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const user = document.getElementById('inputLoginUsername').value;
+          const pass = document.getElementById('inputLoginPassword').value;
+          await Auth.login(user, pass);
+          this.updateUserInterface();
+          formLogin.reset();
+          this.showToast('Welcome back. Session active.', 'success');
+        } catch (err) {
+          alert(err.message);
+        }
+      });
+    }
+
+    // Re-auth Lock Form
+    const formUnlock = document.getElementById('formUnlockScreen');
+    if (formUnlock) {
+      formUnlock.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+          const pass = document.getElementById('inputUnlockPassword').value;
+          const stored = DB.get(DB.KEYS.USER, null);
+          if (!stored) {
+            this.closeModal('modalLockScreen');
+            return;
+          }
+          await Auth.login(stored.username, pass);
+          this.closeModal('modalLockScreen');
+          document.getElementById('inputUnlockPassword').value = '';
+          this.showToast('Unlocked.');
+        } catch (err) {
+          alert('Incorrect password. Please try again.');
+        }
+      });
+    }
+
+    // Purge All Data Button
+    const btnPurge = document.getElementById('btnPurgeAllData');
+    if (btnPurge) {
+      btnPurge.addEventListener('click', () => {
+        if (confirm('CRITICAL PRIVACY ACTION: This will permanently wipe all local health logs, period logs, contacts, and account credentials from this device. Are you sure?')) {
+          DB.purgeAllData();
+          Auth.logout();
+          window.location.reload();
+        }
+      });
+    }
+
+    // Export Data Button
+    const btnExport = document.getElementById('btnExportData');
+    if (btnExport) {
+      btnExport.addEventListener('click', () => {
+        const json = DB.exportData();
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `shecare_backup_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.showToast('Export downloaded safely.');
+      });
+    }
+  },
+
+  renderActiveSessions() {
+    const container = document.getElementById('activeSessionsList');
+    if (!container) return;
+
+    const sessions = Auth.getActiveSessions();
+    if (sessions.length === 0) {
+      container.innerHTML = '<p style=\"color:var(--text-muted);font-size:0.88rem;\">No active sessions tracked.</p>';
+      return;
+    }
+
+    container.innerHTML = sessions.map(s => `
+      <div style=\"display:flex;justify-content:space-between;align-items:center;padding:12px;border-bottom:1px solid var(--border);\">
+        <div>
+          <div style=\"font-weight:600;font-size:0.92rem;\">${s.browser} on ${s.os} ${s.isCurrent ? '<span class=\"badge badge-success\">This Device</span>' : ''}</div>
+          <div style=\"font-size:0.78rem;color:var(--text-muted);margin-top:2px;\">Screen: ${s.screen} • Login: ${new Date(s.loginTime).toLocaleDateString()} ${new Date(s.loginTime).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
+        </div>
+        ${!s.isCurrent ? `<button class=\"btn btn-sm btn-secondary\" onclick=\"App.revokeSessionItem('${s.id}')\">Revoke</button>` : '<span style=\"font-size:0.8rem;color:var(--text-muted);\">Active</span>'}
+      </div>
+    `).join('');
+  },
+
+  revokeSessionItem(sessionId) {
+    const res = Auth.revokeSession(sessionId);
+    this.renderActiveSessions();
+    if (res.loggedOutCurrent) {
+      window.location.reload();
+    } else {
+      this.showToast('Session revoked.');
+    }
+  }
+};
+
+// Global Bootstrapper
+window.addEventListener('DOMContentLoaded', () => {
+  App.init();
+});
+
+  }
+  </script>
+  <script>
+    // Register PWA Service Worker for Offline-First Capability
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(() => {
+        console.log('PWA Service Worker registered successfully.');
+      }).catch(err => {
+        console.log('Service Worker registration skipped (normal for file:// protocol):', err);
+      });
+    }
+  </script>
+</body>
+</html>

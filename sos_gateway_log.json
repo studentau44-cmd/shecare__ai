@@ -1,0 +1,74 @@
+[
+  {
+    "id": "gw_5847c5c65147cd9b",
+    "timestamp": "2026-10-24T17:12:40.980236+00:00",
+    "recipient": "+923001234567",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  },
+  {
+    "id": "gw_b9f65a5087cb44b0",
+    "timestamp": "2026-10-24T11:48:13.028804+00:00",
+    "recipient": "+923001234567",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  },
+  {
+    "id": "gw_fc61c18a4d27ad6c",
+    "timestamp": "2026-10-24T11:46:12.142585+00:00",
+    "recipient": "+923001234567",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  },
+  {
+    "id": "gw_84b96fd04adf13b9",
+    "timestamp": "2026-10-24T11:44:37.217523+00:00",
+    "recipient": "+923001234567",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  },
+  {
+    "id": "gw_26f91c5694fb601e",
+    "timestamp": "2026-10-24T11:32:29.541981+00:00",
+    "recipient": "+923001234567",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  },
+  {
+    "id": "gw_4d6dace395b6df06",
+    "timestamp": "2026-10-24T11:30:20.421028+00:00",
+    "recipient": "+923001234567",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  },
+  {
+    "id": "gw_a5d28791849d0b46",
+    "timestamp": "2026-10-24T10:11:20.564027+00:00",
+    "recipient": "+18006564673",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  },
+  {
+    "id": "gw_37107ab728223e49",
+    "timestamp": "2026-10-24T10:10:32.086439+00:00",
+    "recipient": "+18006564673",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  },
+  {
+    "id": "gw_13eb5c8d042f36e7",
+    "timestamp": "2026-10-24T10:08:54.516272Z",
+    "recipient": "+18006564673",
+    "messageLength": 37,
+    "status": "DISPATCHED_TO_CARRIER",
+    "deliveryNote": "Dispatched to SMS gateway. Carrier handshake completed. Recipient delivery depends on mobile network coverage."
+  }
+]
