@@ -970,6 +970,53 @@ svg {
           <h1>🌱 Mental Health & Crisis Grounding</h1>
           <p>Trauma-informed, non-judgmental wellness tools and offline support protocols.</p>
         </div>
+        
+<section id="nearbyHealthcare">
+  <h2>Nearby Healthcare</h2>
+  <p>Find healthcare facilities around a selected location.</p>
+
+  <p id="healthcarePrivacy">
+    <strong>Privacy notice:</strong>
+    Your location is requested only when you select
+    "Use My Location". Searching sends the map coordinates
+    and search request to the public OpenStreetMap-related
+    services. Do not enter private medical information.
+  </p>
+
+  <div class="healthcare-controls">
+    <button id="useHealthcareLocation" type="button">
+      Use My Location
+    </button>
+
+    <button id="searchHealthcareArea" type="button">
+      Search This Map Area
+    </button>
+
+    <input
+      id="healthcareSearch"
+      type="search"
+      placeholder="Filter by facility name..."
+      aria-label="Search healthcare facilities"
+    />
+
+    <select id="healthcareCategory" aria-label="Facility category">
+      <option value="all">All facilities</option>
+      <option value="hospital">Hospitals</option>
+      <option value="clinic">Clinics</option>
+      <option value="pharmacy">Pharmacies</option>
+      <option value="doctor">Doctors and dentists</option>
+    </select>
+  </div>
+
+  <p id="healthcareStatus" role="status" aria-live="polite">
+    Move the map to an area and select Search This Map Area.
+  </p>
+
+  <div id="nearbyHealthcareMap"></div>
+
+  <div id="healthcareResults" aria-live="polite"></div>
+</section>
+
 
         <div class="alert-box alert-info">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;height:24px;min-width:24px;max-width:24px;height:24px;flex-shrink:0;vertical-align:middle;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -4439,5 +4486,9 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }
   </script>
+  
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./js/nearby-healthcare.js"></script>
+
 </body>
 </html>
