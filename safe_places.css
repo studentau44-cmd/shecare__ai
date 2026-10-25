@@ -55,3 +55,82 @@
 .sc-place-card p{line-height:1.5;font-size:.93rem}.sc-place-card a,.sc-places a{color:#873d2d;font-weight:700}.sc-place-card a{display:inline-block;margin:5px 10px 0 0}
 .sc-places__notice{line-height:1.55;font-size:.93rem}.sc-places__attribution{text-align:center;font-size:.8rem}
 @media(max-width:520px){.sc-places{padding:18px 10px}.sc-places__controls,.sc-places__results{padding:13px}.sc-places__search{flex-direction:column}.#sc-map{height:300px;min-height:300px}}
+
+/* =====================================================
+   SHECARE AI - LEAFLET MAP FIX
+   ===================================================== */
+
+/* Actual map used by nearby-healthcare.js */
+#nearbyHealthcareMap {
+    width: 100% !important;
+    max-width: 1000px !important;
+    height: 400px !important;
+    min-height: 400px !important;
+    margin: 18px auto !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+    background: #f8e6dc !important;
+}
+
+/* Leaflet map itself */
+#nearbyHealthcareMap.leaflet-container {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* IMPORTANT:
+   Prevent SheCare's global img CSS from stretching
+   Leaflet map tiles */
+#nearbyHealthcareMap img.leaflet-tile {
+    width: 256px !important;
+    height: 256px !important;
+    max-width: none !important;
+    max-height: none !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    object-fit: fill !important;
+}
+
+/* Leaflet tile containers */
+#nearbyHealthcareMap .leaflet-tile-container {
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Every Leaflet tile */
+#nearbyHealthcareMap .leaflet-tile {
+    width: 256px !important;
+    height: 256px !important;
+    max-width: none !important;
+    max-height: none !important;
+}
+
+/* Protect Leaflet's internal panes */
+#nearbyHealthcareMap .leaflet-map-pane,
+#nearbyHealthcareMap .leaflet-tile-pane,
+#nearbyHealthcareMap .leaflet-overlay-pane,
+#nearbyHealthcareMap .leaflet-shadow-pane,
+#nearbyHealthcareMap .leaflet-marker-pane,
+#nearbyHealthcareMap .leaflet-tooltip-pane,
+#nearbyHealthcareMap .leaflet-popup-pane {
+    position: absolute !important;
+}
+
+/* Keep controls above map */
+#nearbyHealthcareMap .leaflet-control {
+    z-index: 1000 !important;
+}
+
+/* Prevent global image rules from affecting Leaflet */
+#nearbyHealthcareMap img {
+    max-width: none !important;
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+    #nearbyHealthcareMap {
+        height: 300px !important;
+        min-height: 300px !important;
+    }
+}
