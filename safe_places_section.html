@@ -1,0 +1,25 @@
+<section id="safe-places" class="sc-places">
+  <header class="sc-places__header">
+    <p class="sc-places__eyebrow">YOUR SAFETY MATTERS</p>
+    <h2>Find Medical Help &amp; Support</h2>
+    <p>Explore nearby medical facilities. Your location is used only after you choose to share it.</p>
+  </header>
+  <div class="sc-places__controls">
+    <button type="button" id="sc-use-location">Use my current location</button>
+    <label for="sc-area">Or enter a city or area</label>
+    <div class="sc-places__search">
+      <input id="sc-area" type="text" placeholder="e.g. Rawalpindi, Pakistan" autocomplete="off">
+      <button type="button" id="sc-search-area">Search area</button>
+    </div>
+    <p id="sc-status" role="status" aria-live="polite">Choose a location to begin.</p>
+  </div>
+  <div id="sc-map" class="sc-places__map" aria-label="Interactive map"></div>
+  <section class="sc-places__results"><h3>Nearby hospitals &amp; clinics</h3><div id="sc-hospital-cards" class="sc-places__grid"><p>Search an area to find listings.</p></div></section>
+  <section class="sc-places__results">
+    <h3>Shelter &amp; survivor support</h3>
+    <p class="sc-places__notice">Map data may be incomplete or outdated. These listings are not safety-verified. Confirm availability and whether contacting or visiting is safe.</p>
+    <div id="sc-shelter-cards" class="sc-places__grid"><p>Search an area to look for tagged support listings. No results does not mean no services exist.</p></div>
+    <p>Prefer Google Maps? <a id="sc-google-hospitals" href="https://www.google.com/maps/search/hospitals/" target="_blank" rel="noopener noreferrer">Search hospitals</a> · <a id="sc-google-shelters" href="https://www.google.com/maps/search/women+shelter+support/" target="_blank" rel="noopener noreferrer">Search support services</a></p>
+  </section>
+  <p class="sc-places__attribution">Map © OpenStreetMap contributors. Search results are community map data, not emergency dispatch.</p>
+</section>
